@@ -138,6 +138,17 @@ body{background:var(--void);color:var(--ink);font-family:var(--f-ui);overflow:hi
 .controls button:focus-visible{outline:2px solid var(--emerald);outline-offset:2px}
 .controls button[aria-pressed="true"]{color:var(--emerald);border-color:rgba(61,255,158,.7)}
 
+#structure{overflow:visible}
+#monitor{position:absolute;left:0;top:0;display:none;transform:translate(-50%,-50%);place-content:center;gap:.03em;border:2px solid #2a3a33;background:#020604;box-shadow:0 0 0 3px #0b1310,0 0 30px rgba(61,255,158,.35),inset 0 0 24px rgba(61,255,158,.15);text-align:center;color:var(--ink)}
+#monitor .mh{font-size:.05em;font-weight:700;letter-spacing:.5em;padding-left:.5em;color:var(--mist)}
+#monitor .mn{font-size:.15em;font-weight:600;font-variant-numeric:tabular-nums;text-shadow:0 0 .2em rgba(61,255,158,.7)}
+#realities .panel{width:min(22vw,28vh)}
+.panel .psub{position:absolute;left:0;right:0;bottom:10%;text-align:center;font-weight:600;font-size:min(1.4vw,1.8vh);letter-spacing:.35em;color:var(--gold)}
+.panel.ruin{background:repeating-linear-gradient(0deg,#151515 0 2px,#050505 2px 4px)}
+#curtain{display:none}
+#curtain > div{position:absolute;top:0;bottom:0;width:51%;background:#000}
+#curtain .cl{left:0;box-shadow:inset -16px 0 20px -6px #4a2f17,6px 0 0 #2a1a0c}
+#curtain .cr{right:0;box-shadow:inset 16px 0 20px -6px #4a2f17,-6px 0 0 #2a1a0c}
 @media (max-aspect-ratio:1/1){
   :root{--num:min(13vw,12vh)}
   .roch{top:13%;height:42%}
@@ -198,6 +209,7 @@ body{background:var(--void);color:var(--ink);font-family:var(--f-ui);overflow:hi
       <rect x="0" y="640" width="1600" height="260" fill="url(#gFloor)"/>
       <rect class="glow" x="0" y="639" width="1600" height="1.6" fill="#b8ffd8" opacity=".5"/>
       <g id="Rscale">
+      <g id="cake" opacity="0"></g>
       <g mask="url(#reflMask)" opacity=".34" filter="url(#rippleR)"><use href="#Rwrap" transform="translate(0 1280) scale(1 -1)"/></g>
       <g id="Rwrap">
         <use href="#Rshape" fill="#2bff95" class="glow" filter="url(#bloom)"/>
@@ -217,6 +229,15 @@ body{background:var(--void);color:var(--ink);font-family:var(--f-ui);overflow:hi
         </g>
         <use href="#Rshape" fill="none" stroke="#b8ffd8" stroke-opacity=".55" stroke-width="2.5" class="glow"/>
         <use href="#Rshape" fill="none" stroke="#ffe2a6" stroke-opacity=".7" stroke-width="2.5" class="glowG"/>
+        <g id="rcracks" opacity="0" fill="none" stroke-linecap="round">
+          <path d="M600 90L628 150L612 200L650 262M628 150L668 160M700 430L736 482L718 548L756 612M990 300L958 352L976 398" stroke="#020403" stroke-width="7"/>
+          <path d="M600 90L628 150L612 200L650 262M628 150L668 160M700 430L736 482L718 548L756 612M990 300L958 352L976 398" stroke="#ffd98a" stroke-width="1.6" stroke-opacity=".75"/>
+        </g>
+        <g id="chainCrack" opacity="0" fill="none" stroke-linecap="round">
+          <path d="M900 160L925 205L912 240L945 285L930 330L960 372" stroke="#010302" stroke-width="9"/>
+          <path id="ccGlow" d="M900 160L925 205L912 240L945 285L930 330L960 372" stroke="#7dffbc" stroke-width="3"/>
+          <path id="ccBranch" d="M925 205L966 214M945 285L988 300M930 330L902 362" stroke="#7dffbc" stroke-width="2.5" opacity="0"/>
+        </g>
         <g id="Rmud" opacity="0">
           <use href="#Rshape" fill="url(#gMud)"/>
           <g clip-path="url(#Rclip)"><use href="#Rshape" fill="none" stroke="#3a2614" stroke-width="40" opacity=".7"/></g>
@@ -241,9 +262,11 @@ body{background:var(--void);color:var(--ink);font-family:var(--f-ui);overflow:hi
   <div class="layer" id="backB"></div>
   <div class="layer" id="pulseWash"></div>
   <div class="layer" id="eyesLayer"></div>
+  <div class="layer" id="realities"></div>
   <div class="layer" id="clays"></div>
   <div class="layer" id="giantFrontL"><div class="giant" id="gFront"><img alt=""></div></div>
   <div class="layer" id="panels"></div>
+  <div id="monitor" aria-hidden="true"><div class="mh">ROCHELY IS COMING</div><div class="mn" id="monNum">00:00:00:00</div></div>
 
   <div id="cd" role="timer" aria-live="off">
     <div class="head" id="head">ROCHELY IS COMING</div>
@@ -271,14 +294,16 @@ body{background:var(--void);color:var(--ink);font-family:var(--f-ui);overflow:hi
     <div id="poster">
       <div class="t-hb" id="tHB">HAPPY BIRTHDAY</div>
       <h1 class="t-name" id="tName">ROCHELY</h1>
-      <div class="t-line" id="tL1">THE WAIT IS OVER.</div>
-      <div class="t-line c-gold" id="tL2">YOUR DAY HAS BEGUN.</div>
+      <div class="t-line c-gold" id="tL1">OCTOBER 28</div>
+      <div class="t-line" id="tL2">ALL OF THIS WAS FOR YOU.</div>
+      <div class="t-line c-gold" id="tL3">THE WAIT IS OVER.</div>
     </div>
   </div>
   <canvas id="top"></canvas>
 </div>
 
   <div class="layer" id="dark"></div>
+  <div class="layer" id="curtain" aria-hidden="true"><div class="cl"></div><div class="cr"></div></div>
   <canvas id="over"></canvas>
   <div class="layer" id="card" aria-live="polite"></div>
   <div class="layer" id="pure" aria-hidden="true">
@@ -317,6 +342,7 @@ body{background:var(--void);color:var(--ink);font-family:var(--f-ui);overflow:hi
         <feOffset id="lmeltFlow" in="t" dy="0" result="tf"/>
         <feDisplacementMap id="lmeltMap" in="SourceGraphic" in2="tf" scale="0" xChannelSelector="R" yChannelSelector="G"/>
       </filter>
+      <filter id="hmelt" x="-10%" y="-40%" width="120%" height="220%"><feTurbulence type="fractalNoise" baseFrequency="0.02 0.06" numOctaves="2" seed="13" result="t"/><feOffset id="hmeltFlow" in="t" dy="0" result="tf"/><feDisplacementMap id="hmeltMap" in="SourceGraphic" in2="tf" scale="0" xChannelSelector="R" yChannelSelector="G"/></filter>
       <filter id="ripple"><feTurbulence type="fractalNoise" baseFrequency="0.004 0.12" numOctaves="1" seed="5" result="w"/><feOffset id="rippleFlow" in="w" dx="0" result="wf"/><feDisplacementMap in="SourceGraphic" in2="wf" scale="7" xChannelSelector="R" yChannelSelector="G"/></filter>
     </defs>
   </svg>
@@ -358,7 +384,7 @@ const cd = $('#cd'), row = $('#row'), head = $('#head'), lbls = $$('#row .lbl'),
 const nums = $$('#row .num'), colonEls = $$('#row .colon');
 const pure = $('#pure'), pi = ['#p1', '#p2', '#p3', '#p4'].map($), finalEl = $('#final'), fNum = $('#fNum');
 const flash = $('#flash'), blackout = $('#blackout'), darkEl = $('#dark'), cardEl = $('#card'), clayText = $('#clayText');
-const P = ['#tHB', '#tName', '#tL1', '#tL2'].map($);
+const P = ['#tHB', '#tName', '#tL1', '#tL2', '#tL3'].map($);
 
 for (const el of $$('.clay > div')) el.style.webkitMaskImage = el.style.maskImage = `url(${clayImg.src})`;
 rochGold.style.webkitMaskImage = rochGold.style.maskImage = `url(${rochImg.src})`;
@@ -369,6 +395,33 @@ for (let i = 12; i >= 1; i--) {
   u.setAttribute('fill', i === 12 ? '#0f1814' : `rgb(${4 + i},${9 + i},${7 + i})`);
   ex.appendChild(u);
 }
+
+/* the birthday structure that was being built all along (revealed at 00:00:00:00) */
+(() => {
+  const NS = 'http://www.w3.org/2000/svg', cake = $('#cake');
+  const el = (tag, at) => { const n = document.createElementNS(NS, tag); for (const k in at) n.setAttribute(k, at[k]); cake.appendChild(n); return n; };
+  for (const [x0, y0, x1, y1] of [[95, 1180, 1495, 1500], [245, 900, 1345, 1180], [415, 640, 1175, 900]]) {
+    el('rect', { x: x0, y: y0, width: x1 - x0, height: y1 - y0, fill: 'url(#gMetal)' });
+    el('rect', { x: x0, y: y0, width: x1 - x0, height: y1 - y0, fill: 'url(#gGlass)', class: 'glow', filter: 'url(#grime)' });
+    el('rect', { x: x0, y: y0, width: x1 - x0, height: y1 - y0, fill: 'url(#gGlassG)', class: 'glowG', filter: 'url(#grime)' });
+    el('rect', { x: x0 + 18, y: y0 + 18, width: x1 - x0 - 36, height: y1 - y0 - 36, fill: '#050a08', opacity: .55 });
+    for (const [c, cls] of [['#7dffbc', 'glow'], ['#ffd98a', 'glowG']]) {
+      el('path', { d: `M${x0} ${y0}H${x1}`, stroke: c, 'stroke-width': 6, class: cls });
+      let d = `M${x0} ${y0 + 40}`; const n = Math.round((x1 - x0) / 90);
+      for (let i = 0; i < n; i++) { const a = x0 + (x1 - x0) * i / n, b = x0 + (x1 - x0) * (i + 1) / n; d += ` Q${(a + b) / 2} ${y0 + 95} ${b} ${y0 + 40}`; }
+      el('path', { d, fill: 'none', stroke: c, 'stroke-width': 3, class: cls });
+      for (let x = x0 + 30; x < x1 - 20; x += 46) el('circle', { cx: x, cy: y1 - 40, r: 5, fill: c, class: cls });
+    }
+  }
+  for (const [c, cls] of [['#7dffbc', 'glow'], ['#ffd98a', 'glowG']]) el('text', { x: 795, y: 1110, 'font-size': 200, 'font-weight': 800, 'font-family': 'Montserrat, sans-serif', 'text-anchor': 'middle', fill: 'none', stroke: c, 'stroke-width': 5, class: cls }).textContent = '28';
+  for (const [x, y] of [[300, 900], [380, 900], [1210, 900], [1290, 900], [150, 1180], [250, 1180], [1340, 1180], [1440, 1180]]) {
+    el('rect', { x: x - 13, y: y - 160, width: 26, height: 160, fill: 'url(#gMetal)' });
+    el('rect', { x: x - 13, y: y - 160, width: 26, height: 160, fill: 'none', stroke: '#7dffbc', 'stroke-width': 2, class: 'glow' });
+    el('rect', { x: x - 13, y: y - 160, width: 26, height: 160, fill: 'none', stroke: '#ffd98a', 'stroke-width': 2, class: 'glowG' });
+    el('ellipse', { cx: x, cy: y - 184, rx: 12, ry: 22, fill: '#ffd98a', style: 'opacity:var(--flame,0)' });
+    el('ellipse', { cx: x, cy: y - 180, rx: 5, ry: 10, fill: '#fff8e4', style: 'opacity:var(--flame,0)' });
+  }
+})();
 
 /* melt filters: one per clay body so each can deform independently */
 const filtersEl = $('#filters'), melt0 = $('#melt0');
@@ -402,16 +455,13 @@ gFront.style.filter = 'url(#melt5)'; gBack.style.filter = 'url(#melt6)';
 /* ---------- time ---------- */
 let simTarget = null, simBday = false;
 if (HASH === 'final') simTarget = Date.now() + 65000;
-if (HASH === 'bday') simBday = true;
+if (HASH === 'bday' || HASH === 'bdayagain') simBday = true;
 function timeState() {
   const now = new Date();
   if (simBday) return { isDay: true, rem: 0 };
   if (simTarget) { const rem = simTarget - now; return rem > 0 ? { isDay: false, rem } : { isDay: true, rem: 0 }; }
-  const y = now.getFullYear();
-  let target = new Date(y, 9, 28), end = new Date(y, 9, 29);
-  if (now >= end) target = new Date(y + 1, 9, 28);
-  const isDay = now >= target && now < end;
-  return { isDay, rem: Math.max(0, target - now) };
+  const target = new Date(2026, 9, 28);
+  return { isDay: now >= target, rem: Math.max(0, target - now) };
 }
 
 /* ---------- countdown display ---------- */
@@ -493,7 +543,7 @@ const top = $('#top'), tx = top.getContext('2d');
 const over = $('#over'), ox = over.getContext('2d');
 const glass = $('#glass'), qx = glass.getContext('2d');
 const grain = $('#grain'), gx = grain.getContext('2d');
-let W = 0, H = 0, DPR = 1, CW = 0, CH = 0, rowH = 1, rowW = 1, narrow = false;
+let W = 0, H = 0, DPR = 1, CW = 0, CH = 0, rowH = 1, rowW = 1, narrow = false, camOrigin = '', monGeo = { x: 0, y: 0, w: 100 }, rcGeo = { x: 0, y: 0 }, crackVB = [935, 265], win28 = [];
 const vbm = (x, y, w, h) => { const s = Math.max(w / 1600, h / 900); return [(w - 1600 * s) / 2 + x * s, (h - 900 * s) / 2 + y * s, s]; };
 let windows = [];
 
@@ -529,6 +579,7 @@ function drawGotham() {
   };
   layer('#0a1813', .18, .52, .03, 7, false);
   layer('#050d0a', .08, .34, .05, 29, true);
+  win28 = []; for (let i = 0; i < 28 && windows.length; i++) win28.push(windows[(i * 7919 + 13) % windows.length]);
   gc.drawImage(off, 0, 0);
   gc.fillStyle = '#020504'; gc.fillRect(0, fy, w, h - fy);
   gc.save(); gc.globalAlpha = .28; gc.translate(0, fy * 2); gc.scale(1, -1); gc.filter = 'blur(2px)';
@@ -564,7 +615,10 @@ function resize() {
   const rk = Math.min(1, Math.min(1600, 900 * CW / CH) / 640);
   Rscale.setAttribute('transform', `translate(795 640) scale(${rk}) translate(-795 -640)`);
   const [ox0, oy0] = vbm(795 + 97 * rk, 640 - 464 * rk, CW, CH);
-  camera.style.transformOrigin = `${ox0}px ${oy0}px`;
+  camOrigin = `${ox0}px ${oy0}px`; camera.style.transformOrigin = camOrigin;
+  const [mx0, my0, ms0] = vbm(795 + 5 * rk, 640 - 428 * rk, CW, CH); monGeo = { x: mx0, y: my0, w: 128 * ms0 * rk };
+  const [rx0, ry0] = vbm(795, 640 - 310 * rk, CW, CH); rcGeo = { x: rx0, y: ry0 };
+  crackVB = [795 + 140 * rk, 640 - 375 * rk];
   drawGotham(); measure(); genDrips();
 }
 
@@ -603,12 +657,12 @@ function sampleClay() {
 clayImg.complete ? sampleClay() : clayImg.addEventListener('load', sampleClay);
 
 /* ---------- audio (optional, synthesized) ---------- */
-let AC = null, master = null, soundOn = false, rainGain = null;
+let AC = null, master = null, soundOn = false, rainGain = null, droneGain = null;
 const nb = sec => { const b = AC.createBuffer(1, AC.sampleRate * sec, AC.sampleRate), d = b.getChannelData(0); for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1; return b; };
 function initAudio() {
   AC = new (window.AudioContext || window.webkitAudioContext)();
   const comp = AC.createDynamicsCompressor(); master = AC.createGain(); master.gain.value = .9; master.connect(comp); comp.connect(AC.destination);
-  const dg = AC.createGain(); dg.gain.value = .045; dg.connect(master);
+  const dg = AC.createGain(); dg.gain.value = .045; dg.connect(master); droneGain = dg;
   [41.2, 61.7, 82.4].forEach((f, i) => { const o = AC.createOscillator(); o.frequency.value = f; o.detune.value = i * 4; o.connect(dg); o.start(); });
   const n = AC.createBufferSource(); n.buffer = nb(4); n.loop = true;
   const lp = AC.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 900;
@@ -659,11 +713,34 @@ const S = new Proxy({}, { get: (_, k) => (...a) => { if (soundOn && AC) try { A[
 /* ---------- state ---------- */
 let mode = 'intro', introStart = performance.now(), liveStart = 0, bdayStart = 0, bdayFrom = 0, lastNow = performance.now();
 let pulse = 0, lastSec = -1, lastT = -1, lastRem = 0;
-let cur = null, nextEventAt = Infinity, spinAcc = 0, ltAt = -10, nextLt = 0, nextFw = 0, bdayFired = false;
+let cur = null, nextEventAt = Infinity, spinAcc = 0, ltAt = -10, nextLt = 0, nextFw = 0;
 let mx = 0, my = 0, smx = 0, smy = 0;
 addEventListener('pointermove', e => { mx = e.clientX / W - .5; my = e.clientY / H - .5; });
 let history = [];
 try { history = JSON.parse(localStorage.getItem('rochely-events') || '[]'); } catch (e) {}
+/* the page remembers: visits, secrets, the chained microstory, the final-24h hours, whether the birthday already happened */
+const story = { visits: 0, incursion: false, secrets: [], chain: 0, hours: [], done: false, seen: 0 };
+try { Object.assign(story, JSON.parse(localStorage.getItem('rochely-story') || '{}')); } catch (e) {}
+const save = () => { try { localStorage.setItem('rochely-story', JSON.stringify(story)); } catch (e) {} };
+story.visits++; save();
+const visitNo = /^visit\d+$/.test(HASH) ? +HASH.slice(5) : story.visits;
+if (HASH === 'seen') story.incursion = true;
+if (/^chain\d$/.test(HASH)) story.chain = +HASH.slice(5);
+let unlocked = story.incursion;
+function unlock() { unlocked = story.incursion = true; if (!story.secrets.includes('incursion')) story.secrets.push('incursion'); save(); }
+let greeted = false, finalPhaseShown = false, hourShown = 0, m28Key = '', a28Key = '', lastMute = -1, clayLevelNow = 0;
+let watchAt = 40, watchPos = [0, 0], watchStart = -10, g28Slot = -1, g28At = -10, dropSlot = -1, lt28 = false, fin = {};
+const HOUR_LINES = ['IT IS ALMOST TIME', 'ONE HOUR. HOLD YOUR BREATH.', 'NOTHING HERE IS BROKEN', 'THE R KNOWS WHAT IT WILL BECOME', 'THE LAST PIECES ARE BEING CARRIED',
+  'FIVE HOURS. THE LIGHTS ARE READY.', 'THE TIMELINES AGREED ON A DATE', 'CLAYFACE PRACTICED HIS SMILE', 'GOLD IS LEAKING INTO THE GREEN', 'THE STORM IS RUNNING OUT OF RAIN',
+  'EVERY GLITCH IS BEING COLLECTED', 'THE BALLOONS ARE WAITING IN THE DARK', 'TWELVE HOURS. NO MORE MISTAKES.', 'HALF THE STRUCTURE IS STANDING', 'THE MACHINE LEARNED HER NAME',
+  'MUD IS BEING SHAPED, NOT SPILLED', 'THE CLOCK HAS STOPPED FIGHTING', 'SOMEONE IS MEASURING THE SKY', 'THE FRACTURES ARE ALIGNING', 'A GOLD THREAD APPEARED IN THE STORM',
+  'GOTHAM COUNTED 28 WINDOWS', 'THE R IS WARMER THAN BEFORE', 'CLAYFACE STOPPED SLEEPING', 'THE FOUNDATION HAS BEEN LAID'];
+function clayLevel(rem) {
+  // a drop, then eyes, a hand, a face, the whole body, then control
+  if (/^lvl\d$/.test(HASH)) return +HASH.slice(3);
+  const timeK = clamp((60 * 3600e3 - rem) / (60 * 3600e3)) * 3;
+  return Math.min(5, Math.floor(timeK + (visitNo - 1) * .8 + (unlocked ? 1 : 0) + story.seen / 25));
+}
 
 /* effect state written by events each frame */
 const FX0 = () => ({
@@ -677,13 +754,16 @@ const FX0 = () => ({
   card: null, flash: 0, flashColor: '200,255,225', shocks: [], screenGlitch: 0, staticK: 0,
   mudCover: null, mudRain: 0, rainUp: 0, cracks: null, portal: null, suck: 0, gothamDark: 0, lights28: 0, gothamShake: 0, gothamLit: 0,
   shards: null, machine: null, panels: null, warp: 0, clayTextO: null, scan: null, slabs: null, bolt: null, rings: null, cage: null, puddle: 0,
+  freeze: false, mute: 0, camZoom: null, monitor: 0, realities: null, tparts: 0, headMud: 0, headFlicker: 0, curtain: -1, cake: 0, flame: 0, worldFade: 1, hideBalloons: 0, chainStage: null, chainPulse: 0, chainPortal: null, sparkBoost: 0, baseClayRelax: 0,
 });
 
 /* ---------- events ---------- */
 const cue = (ev, e, at, fn) => { if (!ev.fired.has(at) && e >= at) { ev.fired.add(at); try { fn(); } catch (err) {} } };
 const sprite = (fx, o) => fx.clays.push(Object.assign({ x: .5, y: .9, h: .7, a: 1, melt: 8, br: .5, sx: 1, sy: 1, rot: 0, flip: false }, o));
 const card = (fx, key, html, a) => { fx.card = { key, html, a }; };
-const glitchOut = (fx, e, at, len = .7) => { const g = bell(e, at, at + len, .05, .2); fx.cdGlitch = Math.max(fx.cdGlitch, g); fx.screenGlitch = Math.max(fx.screenGlitch, g); return g; };
+const glitchOut = (fx, e, at, len = .7) => { const g = bell(e, at, at + len, .05, .2); fx.cdGlitch = Math.max(fx.cdGlitch, g); fx.screenGlitch = Math.max(fx.screenGlitch, g); if (g > .3 && cur && cur.msg && !fx.card) card(fx, 'msg' + cur.msg, `<div class="cin"><div class="c-hud c-gold">${cur.msg}</div></div>`, g); return g; };
+const crackScreen = () => { const m = Rscale.getScreenCTM(); if (!m) return [W / 2, H / 3]; const p = new DOMPoint(935, 265).matrixTransform(m); return [p.x, p.y]; };
+const cakePoint = (x, y) => { const m = Rscale.getScreenCTM(); if (!m) return [W / 2, H / 2]; const p = new DOMPoint(x, y).matrixTransform(m); return [p.x, p.y]; };
 const shock = (fx, e, at, x, y, col = '61,255,158', dur = 1.4) => { const k = prog(e, at, dur); if (k > 0 && k < 1) fx.shocks.push({ x, y, r: eOut(k), a: 1 - k, col }); };
 const flashAt = (fx, e, at, col, dur = .6, amt = 1) => { const k = prog(e, at, dur); if (k > 0 && k < 1) { fx.flash = Math.max(fx.flash, (1 - k) * amt); fx.flashColor = col; } };
 const shakeAt = (fx, e, at, amt = 14, dur = .5) => { const k = prog(e, at, dur); if (k > 0 && k < 1) fx.shake = Math.max(fx.shake, amt * (1 - k)); };
@@ -1111,21 +1191,247 @@ const EVENTS = [
   if (e > 3.6 && e < 9) card(fx, 'gl', '<div class="cin" style="margin-top:62vh"><div class="c-mid c-gold" style="letter-spacing:.5em">SHE’S ALMOST HERE.</div></div>', bell(e, 3.8, 8.4, 1, 1));
   cue(ev, e, 1.5, () => { S.pad(8); S.chime(); });
 } },
+
+/* ===== CLAYFACE CAN BE ANYTHING ===== */
+{ id: 'headIsClay', cat: 'clay', dur: 10, run(e, fx, ev) {
+  fx.headFlicker = bell(e, .4, 2.2, .1, .1);
+  const hb = head.getBoundingClientRect(), op = bell(e, 2.2, 6.4, .3, .3);
+  if (op > 0) fx.eyes.push({ x: (hb.left + hb.width * .32) / W, y: (hb.top + hb.height * .5) / H, s: Math.max(.02, hb.height * 1.5 / (2.2 * Math.min(W, H))), open: op });
+  fx.headMud = bell(e, 3.4, 7.6, 1.6, .6);
+  if (fx.headMud > .5 && Math.random() < .2) drips.push({ x: (hb.left + rand(0, 1) * hb.width) * DPR, y: hb.bottom * DPR, vy: 0, r: rand(1.5, 3) * DPR, max: (hb.bottom + rand(20, 80)) * DPR });
+  glitchOut(fx, e, 7.6, .6);
+  cue(ev, e, 2.2, () => S.braam(.4, 41.2)); cue(ev, e, 3.4, () => S.squelch()); cue(ev, e, 7.6, () => S.glitch());
+} },
+{ id: 'countdownIsClay', cat: 'clay', dur: 11, run(e, fx, ev) {
+  const m = bell(e, .5, 7.6, 1.6, .5);
+  for (let i = 0; i < 4; i++) fx.cdMud[i] = m; fx.colonMud = m;
+  const op = bell(e, 2.4, 6.8, .3, .3);
+  if (op > 0 && R.colon[1]) { const c = R.colon[1]; fx.eyes.push({ x: (c.left + c.right) / 2 / W, y: (c.top + c.height * .45) / H, s: Math.max(.03, R.row.height / (2.2 * Math.min(W, H)) * .55), open: op }); }
+  const stand = bell(e, 3.6, 6.8, 1.2, .4);
+  fx.cdScale = 1 + .12 * stand; fx.cdY = -H * .03 * stand + H * .06 * eIn(prog(e, 6.8, .6)) * (1 - prog(e, 7.6, .3)); fx.cdRot = Math.sin(e * 3) * 2 * stand;
+  fx.puddle = bell(e, 6.6, 9, .3, 1);
+  glitchOut(fx, e, 7.6, .7);
+  cue(ev, e, .5, () => S.squelch()); cue(ev, e, 2.4, () => S.braam(.45, 36.7)); cue(ev, e, 6.8, () => { S.boom(.7, 120, 30, 1); spawnSplash(.5); }); cue(ev, e, 7.6, () => S.glitch());
+} },
+{ id: 'slabIsClay', cat: 'clay', dur: 10, run(e, fx, ev) {
+  const mud = ramp(e, 4.4, 1.4);
+  fx.slabs = { l: eIn(prog(e, .6, .45)), r: 0, t: 0, up: 0, only: 'l', mud, sag: eIn(prog(e, 5.4, 2)) };
+  shakeAt(fx, e, 1.05, 16, .6);
+  const sw = Math.max(40, W * .06), x = (R.row.left - sw / 2 - 24) / W, y = (R.row.top + R.row.height * .3) / H;
+  fx.eyes.push({ x, y, s: Math.max(.02, sw * .9 / (2.2 * Math.min(W, H))), open: bell(e, 3, 5.6, .25, .3) });
+  if (mud > .3 && Math.random() < .25) drips.push({ x: (R.row.left - sw - 24 + rand(0, sw)) * DPR, y: (R.row.bottom + 30) * DPR, vy: 0, r: rand(2, 4) * DPR, max: H * DPR });
+  glitchOut(fx, e, 8.2, .5);
+  cue(ev, e, 1.05, () => S.boom(.8, 90, 25, 1.2)); cue(ev, e, 3, () => S.braam(.4, 41.2)); cue(ev, e, 4.4, () => S.squelch());
+} },
+/* ===== DOOMSDAY INCURSION FROM THE FUTURE ===== */
+{ id: 'futureGlimpse', cat: 'doom', dur: 11, run(e, fx, ev) {
+  const d = parseInt(fmt(realS())[0], 10);
+  if (e > .4 && e < 4) { fx.cdHide = 1; [[pad2(d + 1), '06', '41', '12'], ['00', '05', '12', '33'], ['00', '00', '00', '00']].forEach((t2, i) => fx.cdClones.push({ t: t2, dy: (i - 1) * 1.15, dx: Math.sin(e * 4 + i) * 16, a: ramp(e, .4 + i * .35, .5), s: .9, gl: .4 })); card(fx, 'fg0', '<div class="cin" style="margin-top:-62vh"><div class="c-hud c-blink">REALITIES OVERLAPPING</div></div>', bell(e, .5, 3.8, .2, .2)); }
+  if (e > 3.8 && e < 6) { fx.portal = { k: eOut(prog(e, 3.8, .6)) * (1 - eIn(prog(e, 5.6, .3))), e, over: true, at: [W / 2, H * .45], big: .9 }; fx.dark = .75; fx.cdHide = 1; fx.rGold = .7; card(fx, 'fg1', '<div class="cin"><div class="c-hud c-gold">FROM THE FUTURE</div><div class="c-big c-gold">HAPPY BIRTHDAY,<br>ROCHELY</div></div>', bell(e, 4.1, 5.6, .3, .05)); }
+  flashAt(fx, e, 5.7, '255,255,255', .5, 1); shakeAt(fx, e, 5.7, 26, .7); shock(fx, e, 5.7, W / 2, H * .45, '255,255,255');
+  if (e > 5.9 && e < 8.6) { card(fx, 'fg2', '<div class="cin"><div class="c-huge">NOT YET.</div></div>', bell(e, 5.9, 8.2, .1, .4)); fx.dark = .5 * bell(e, 5.9, 8.4, .1, .4); }
+  cue(ev, e, .4, () => S.sweep(3.4, 200, 1400, .18, 3)); cue(ev, e, 3.8, () => { S.chime(); S.pad(2.5); }); cue(ev, e, 5.7, () => S.boom(1, 120, 25, 1.6));
+} },
+/* ===== FALSE SYSTEM CRASH (very rare) ===== */
+{ id: 'connectionLost', cat: 'secret', dur: 12, run(e, fx, ev) {
+  fx.freeze = e > .1 && e < .7; fx.mute = e > .1 && e < 9 ? 1 : 0;
+  if (e >= .7 && e < 9.4) { fx.curtain = e < 5.2 ? 0 : eOut(prog(e, 5.2, 1.6)) * .32 * (1 - ramp(e, 8.4, .5)); fx.cdHide = 1; fx.head = 0; }
+  if (e > 1 && e < 4.6) card(fx, 'cl', '<div class="cin"><div class="c-hud">CONNECTION LOST</div><div class="c-hud c-blink" style="letter-spacing:.8em">· · ·</div></div>', bell(e, 1, 4.4, .2, .3));
+  if (e > 3.9 && e < 5.6) fx.giant = { where: 'over', part: 'hand', x: .5, y: lerp(1.3, .55, eOut(prog(e, 3.9, 1.4))), s: 2.6, a: 1 - prog(e, 5.3, .3), br: .5, melt: 16, rot: -8 };
+  else if (e >= 5.6 && e < 9) fx.giant = { where: 'front', part: 'face', x: .5, y: .45, s: 2.2, a: ramp(e, 5.4, .6), br: .5, melt: 10 };
+  glitchOut(fx, e, 8.6, .6);
+  cue(ev, e, 3.9, () => S.squelch()); cue(ev, e, 5.2, () => S.sweep(1.6, 120, 600, .2, 2)); cue(ev, e, 6.8, () => S.braam(.4, 41.2)); cue(ev, e, 8.6, () => S.glitch());
+} },
+/* ===== THE ROCHELY INCURSION (master secret) ===== */
+{ id: 'incursion', cat: 'master', dur: 34.4, run(e, fx, ev) {
+  fx.freeze = e > .12 && e < 1;
+  fx.mute = (e > .12 && e < 9) || (e > 27.2 && e < 33.2) ? 1 : 0;
+  if (e >= 1 && e < 9.4) { fx.dark = 1 - ramp(e, 8.9, .5); fx.cdHide = 1; fx.head = 0; }
+  const L = [[1.6, 2.9, 'SYSTEM FAILURE', 'c-big'], [3.3, 4.6, 'TEMPORAL COLLISION DETECTED', 'c-hud'], [5, 6.3, 'TARGET DATE: OCTOBER 28', 'c-hud'], [6.7, 8.7, 'SUBJECT: ROCHELY', 'c-big']];
+  for (const [a, b, s, c] of L) if (e > a && e < b) card(fx, 'inc' + a, `<div class="cin"><div class="${c}">${s}</div></div>`, bell(e, a, b - .25, .08, .2));
+  for (const g of [2.95, 4.65, 6.35]) { if (e > g && e < g + .28) { fx.screenGlitch = .9; fx.staticK = .45; } cue(ev, e, g, () => S.glitch()); }
+  const live = e < 27.2;
+  if (e >= 8.9 && live) {
+    fx.cdHide = 1; fx.roch = 0; fx.baseClay = 0; fx.head = 0; fx.hideBalloons = 1;
+    fx.camZoom = { s: lerp(ev.s.s0, 1, eInOut(prog(e, 9, 6.2))), o: [monGeo.x, monGeo.y] };
+    fx.monitor = 1 - ramp(e, 15.4, 1);
+  }
+  fx.rMud = live ? ramp(e, 15, 2) : 0; fx.rMelt = live ? 50 * ramp(e, 15, 2) : 0; fx.rBreath = 1 + .025 * Math.sin(e * 2) * bell(e, 14.5, 19, 1, 1);
+  if (e > 16 && e < 19.4) { const m = Rscale.getScreenCTM(); if (m) { const p = new DOMPoint(800, 300).matrixTransform(m), sz = Math.max(.03, (R.rC[1] - R.rTop[1]) / Math.min(W, H) * .45); fx.eyes.push({ x: p.x / W, y: p.y / H, s: sz, open: ramp(e, 16.2, .3) * (1 - ramp(e, 19, .3)), half: e < 16.9 ? 'l' : '' }); } }
+  fx.rHide = live ? ramp(e, 18.6, 1.6) : 0;
+  cue(ev, e, 15, () => S.squelch()); cue(ev, e, 16.2, () => S.braam(.6, 32.7)); cue(ev, e, 16.9, () => S.boom(.6, 90, 30, 1.2));
+  if (e > 18 && live) {
+    const up = eOut(prog(e, 18, 3));
+    sprite(fx, { x: R.rC[0] / W, y: 1.04, h: lerp(.3, 1.15, up), a: clamp((e - 18) * 2), melt: 140 * (1 - up) + 12 + 30 * prog(e, 24, 3), br: .5, rot: Math.sin(e * 6) * 3 * prog(e, 24, 3) });
+    cue(ev, e, 18.2, () => { S.boom(.9, 140, 28, 1.6); spawnSplash(R.rC[0] / W); });
+  }
+  if (e > 19.4 && live) {
+    fx.portal = { k: eOut(prog(e, 19.4, 2)), e, big: 1.9 };
+    fx.realities = { a: ramp(e, 20.2, 1), conv: eIn(prog(e, 24.6, 2.4)), e, hb: e > 23.25 && e < 23.45 };
+    cue(ev, e, 19.4, () => S.sweep(7.6, 60, 2400, .25, 1));
+    const k = bell(e, 22.2, 26.8, .8, .3);
+    if (k > 0 && realEls[1].style.display !== 'none') {
+      const sr = spriteEls[0].getBoundingClientRect(), c1 = realEls[1].getBoundingClientRect(), c4 = realEls[4].getBoundingClientRect(), th = Math.max(8, sr.width * .035);
+      fx.tendrils.push({ p0: [sr.left + sr.width * .3, sr.top + sr.height * .68], p1: [c1.left + c1.width / 2, c1.top + c1.height / 2], k, th }, { p0: [sr.left + sr.width * .82, sr.top + sr.height * .66], p1: [c4.left + c4.width / 2, c4.top + c4.height / 2], k, th });
+    }
+  }
+  if (e > 23 && live) {
+    const k = prog(e, 23, 4.2);
+    fx.shards = { list: ev.s.sh, spread: .15 + .85 * k, a: .9, color: '#f3f7f5', glow: true, cx: W / 2, cy: H / 2, spin: e };
+    fx.screenGlitch = Math.random() < .3 * k ? .8 : .1; fx.shake = 4 + 16 * k; fx.camRot = Math.sin(e * 9) * 3 * k; fx.warp = k; fx.tintMud = .3 * k;
+  }
+  flashAt(fx, e, 27.2, '255,255,255', .5, 1);
+  if (e >= 27.2 && e < 33.3) { fx.dark = 1; fx.cdHide = 1; fx.head = 0; fx.roch = 0; fx.baseClay = 0; }
+  if (e > 29 && e < 31.3) card(fx, 'inev', '<div class="cin"><div class="c-mid" style="color:var(--ink);letter-spacing:.5em">OCTOBER 28 IS INEVITABLE.</div></div>', bell(e, 29, 31, .9, .3));
+  if (e > 31.4 && e < 33.2) card(fx, 'inc2', '<div class="cin"><div class="c-big">ROCHELY</div><div class="c-mid">IS COMING</div></div>', bell(e, 31.4, 33, .6, .2));
+  if (e > 33.2) glitchOut(fx, e, 33.2, .6);
+  cue(ev, e, 27.2, () => { S.boom(1.3, 70, 16, 3.2); unlock(); });
+  cue(ev, e, 29, () => S.boom(.5, 60, 25, 2)); cue(ev, e, 33.2, () => S.glitch());
+}, init(ev) { ev.s.s0 = Math.min(14, CW / Math.max(20, monGeo.w) * .92); ev.s.sh = shardList(220, ['28', '28', '28', '28.10', '00:00:00:00'].concat(fakeTimes().flat())); } },
+/* ===== THE 28 EVENTS ===== */
+{ id: 'minute28', cat: 'special', dur: 13, run(e, fx, ev) {
+  const k = bell(e, .2, 9.4, .4, .6);
+  if (e > .3 && e < 9.4) { fx.cdText = ['28', '28', '28', '28']; fx.cdGlitch = e < 1.2 ? .8 : .15; }
+  const dys = [-2.2, 2.2, -1.1, 1.1, -3.3, 3.3];
+  for (let i = 0; i < 6; i++) if (e > 1 + i * .25 && e < 6.4) fx.cdClones.push({ t: ['28', '28', '28', '28'], dy: dys[i] * (1 - prog(e, 5.6, .8)), dx: Math.sin(e * 2 + i) * 30, a: .5 * bell(e, 1 + i * .25, 5.8, .3, .6), s: .8, gl: .3 });
+  fx.lights28 = ramp(e, 1, 3) * (1 - ramp(e, 9, 1)); fx.gothamDark = .6 * k; fx.raysMul = 1 + 2.5 * k; fx.rGold = .35 * k * (Math.sin(e * 6) > 0 ? 1 : .4); fx.baseClayGlow = k;
+  if (e > 6.2) fx.dark = .5 * bell(e, 6.2, 9.2, .3, .3);
+  if (e > 6.2 && e < 9.4) card(fx, 'm28', '<div class="cin"><div class="c-hud">MINUTE</div><div class="c-huge c-gold">28</div><div class="c-big" style="font-size:clamp(16px,3vw,44px)">OCTOBER 28</div><div class="c-mid">ROCHELY IS COMING</div></div>', bell(e, 6.3, 9.2, .3, .3));
+  [1, 2.4, 3.8].forEach(t2 => { const [cx, cy] = rowC(); shock(fx, e, t2, cx, cy, '255,205,110'); cue(ev, e, t2, () => S.boom(.6, 100, 40, .9)); });
+  glitchOut(fx, e, 9.4, .6);
+  cue(ev, e, .3, () => S.glitch()); cue(ev, e, 6.3, () => S.braam(.55, 41.2));
+} },
+{ id: 'anomaly2828', cat: 'special', dur: 9, run(e, fx, ev) {
+  fx.freeze = e > .05 && e < .5;
+  fx.dark = clamp(prog(e, .5, .1)) * (1 - ramp(e, 6.6, .6)); fx.cdHide = fx.dark;
+  const st = 'style="font-size:min(15vw,19vh)"';
+  if (e > .8 && e < 4.6) card(fx, 'a28' + (e > 2.9 ? 3 : e > 1.9 ? 2 : 1), `<div class="cin"><div class="c-huge" ${st}>28</div>${e > 1.9 ? `<div class="c-huge c-gold" ${st}>28</div>` : ''}${e > 2.9 ? '<div class="c-big">ROCHELY</div>' : ''}</div>`, 1);
+  if (e > 4.6 && e < 6.8) { fx.shards = { list: ev.s.sh, spread: eOut(prog(e, 4.6, 2)), a: 1 - prog(e, 6, .8), color: '#ffd98a', glow: true, cx: W / 2, cy: H / 2, spin: e }; fx.screenGlitch = .6 * (1 - prog(e, 4.6, 2)); }
+  flashAt(fx, e, 4.6, '255,214,140', .6, 1); shock(fx, e, 4.6, W / 2, H / 2, '255,205,110', 1.6); shakeAt(fx, e, 4.6, 24, .8);
+  [.9, 1.9, 2.9].forEach(t2 => cue(ev, e, t2, () => S.boom(.5, 80, 30, 1)));
+  cue(ev, e, 4.6, () => { S.boom(1, 90, 20, 2); S.glitch(); });
+}, init(ev) { ev.s.sh = shardList(120, ['28']); } },
+/* ===== THE PAGE REMEMBERS / NARRATIVE ===== */
+{ id: 'greet', cat: 'special', dur: 5, run(e, fx, ev) {
+  glitchOut(fx, e, .2, .5);
+  const txt = visitNo === 2 ? 'YOU CAME BACK.' : visitNo < 5 ? 'YOU CAME BACK. AGAIN.' : `VISIT ${visitNo}. IT REMEMBERS YOU.`;
+  if (e > .5) card(fx, 'greet', `<div class="cin"><div class="c-hud c-blink" style="font-size:clamp(14px,2.2vw,28px)">${txt}</div></div>`, bell(e, .55, 4.2, .1, .5));
+  fx.cdGlitch = Math.max(fx.cdGlitch, .3 * bell(e, .5, 4, .2, .4)); fx.dark = .4 * bell(e, .5, 4, .2, .5);
+  cue(ev, e, .2, () => S.glitch());
+} },
+{ id: 'restore', cat: 'response', dur: 2.8, run(e, fx, ev) {
+  fx.scan = { y: eInOut(prog(e, .1, 1.6)), a: 1 };
+  if (e > .3) card(fx, 'rs' + ev.s.t, `<div class="cin" style="margin-top:-60vh"><div class="c-hud">DOOMSDAY PROTOCOL · ${ev.s.t}</div></div>`, bell(e, .3, 2.2, .2, .4));
+  fx.raysMul = 1 + .5 * bell(e, .1, 1.8, .3, .6);
+  cue(ev, e, .1, () => S.sweep(1.4, 300, 2600, .12, 6));
+}, init(ev) { ev.s.t = pick(['COUNTDOWN RESTORED', 'MUD PURGED', 'TIME RECOVERED', 'STRUCTURE REPAIRED', 'SECONDS RETURNED']); } },
+{ id: 'nextAnomaly', cat: 'special', dur: 10.4, run(e, fx, ev) {
+  const left = Math.max(0, Math.ceil(10 - e));
+  if (e < 10) card(fx, 'na' + left, `<div class="cin" style="margin-top:-56vh"><div class="c-hud c-blink">NEXT ANOMALY</div><div class="c-big" style="font-variant-numeric:tabular-nums">00:${pad2(left)}</div></div>`, left <= 3 ? 1 : .85);
+  if (left <= 3 && e < 10) { fx.lightMul = .7; fx.cdGlitch = .1; }
+  if (e >= 10) { fx.dark = 1; fx.cdHide = 1; }
+  for (let i = 0; i < 10; i++) cue(ev, e, i, () => S.tick(i >= 7 ? .18 : .08, i >= 7 ? 1100 : 1600));
+}, init(ev) { ev.s.next = EV_BY_ID[pick(['timelineCollapse', 'portal', 'blackout', 'clayVsCountdown', 'rMachine', 'multiverse', 'breaksScreen', 'timeWar', 'futureGlimpse', 'mouth', 'giant', 'clayClock', 'countdownIsClay'])]; } },
+{ id: 'hourReveal', cat: 'special', dur: 9, run(e, fx, ev) {
+  const h = ev.s.h, pct = Math.round((24 - h) / 24 * 100);
+  fx.dark = .65 * bell(e, .2, 7.6, .4, .6); fx.cdHide = .7 * bell(e, .2, 7.6, .4, .6);
+  fx.rings = { k: bell(e, .4, 7.2, .8, .5), rot: e * 30, lock: 0, labels: true }; fx.lights28 = bell(e, 1, 7, 1, 1);
+  if (e > .6 && e < 7.6) card(fx, 'hr' + h, `<div class="cin"><div class="c-hud c-blink">FINAL 24 HOURS</div><div class="c-big">T-${h}H</div><div class="c-mid" style="color:var(--ink)">${HOUR_LINES[h] || ''}</div><div class="c-hud c-gold">PROJECT ROCHELY · ${pct}% ASSEMBLED</div></div>`, bell(e, .6, 7.4, .4, .4));
+  shock(fx, e, .6, W / 2, H / 2, '255,205,110', 1.6);
+  cue(ev, e, .6, () => { S.braam(.5, 41.2); S.tick(.15, 900); });
+}, init(ev) { ev.s.h = hourShown; } },
+{ id: 'finalPhase', cat: 'special', dur: 10, run(e, fx, ev) {
+  fx.dark = .9 * bell(e, .2, 8.4, .3, 1); fx.cdHide = fx.dark;
+  if (e > .8 && e < 4.2) card(fx, 'fp1', '<div class="cin"><div class="c-hud">PROJECT ROCHELY</div><div class="c-big">FINAL PHASE</div><div class="c-hud c-blink">INITIATED</div></div>', bell(e, .8, 4, .3, .3));
+  if (e > 4.4 && e < 8.4) card(fx, 'fp2', '<div class="cin"><div class="c-mid" style="color:#c39058">CLAYFACE</div><div class="c-hud">+</div><div class="c-mid" style="color:var(--emerald)">DOOMSDAY</div><div class="c-big c-gold" style="font-size:clamp(18px,3.6vw,52px)">WORKING TOGETHER</div></div>', bell(e, 4.4, 8.2, .4, .4));
+  fx.baseClayGlow = bell(e, 4.4, 8.4, .5, .5); fx.rGold = .4 * bell(e, 4.4, 8.4, .5, .5);
+  cue(ev, e, .8, () => S.braam(.55, 36.7)); cue(ev, e, 4.4, () => { S.boom(.6, 90, 40, 1); S.chime(); });
+} },
+/* ===== CHAINED MICROSTORY: the crack in the R ===== */
+{ id: 'chain1', cat: 'chain', dur: 9, run(e, fx, ev) {
+  fx.baseClay = 1 - bell(e, 0, 7.5, .6, 1);
+  const lunge = eIn(prog(e, .6, 1.4)), back = eOut(prog(e, 2.6, 1.6));
+  if (e < 4.4) sprite(fx, { x: lerp(1.1, (R.rC[0] + 80) / W, lunge) + .5 * back, y: 1, h: .8, a: 1, melt: 14 + 40 * back, br: .45, rot: -10 * lunge });
+  fx.chainStage = e > 2 ? 1 : 0; shakeAt(fx, e, 2, 22, .7); flashAt(fx, e, 2, '255,255,255', .3, .5);
+  if (e > 2.6 && e < 7.6) card(fx, 'c1', '<div class="cin" style="margin-top:-60vh"><div class="c-hud c-blink">STRUCTURAL DAMAGE · R</div></div>', bell(e, 2.6, 7.4, .2, .4));
+  cue(ev, e, 2, () => { S.crack(); S.boom(.9, 120, 30, 1.2); story.chain = 1; save(); });
+} },
+{ id: 'chain2', cat: 'chain', dur: 8, run(e, fx, ev) {
+  fx.chainPulse = bell(e, .3, 6.5, 1, 1); fx.chainStage = 2;
+  if (e > .8 && e < 6.4) card(fx, 'c2', '<div class="cin" style="margin-top:-60vh"><div class="c-hud">ENERGY LEAK DETECTED</div></div>', bell(e, .8, 6.2, .3, .3));
+  cue(ev, e, .3, () => { S.sweep(4, 200, 900, .15, 4); story.chain = 2; save(); });
+} },
+{ id: 'chain3', cat: 'chain', dur: 8, run(e, fx, ev) {
+  fx.chainPulse = 1.6 * bell(e, .3, 6.5, 1, 1); fx.chainStage = 3; fx.raysMul = 1 + 1.2 * bell(e, .5, 6, 1, 1); fx.shake = 3 * bell(e, .5, 6, 1, 1);
+  if (e > .8 && e < 6.4) card(fx, 'c3', '<div class="cin" style="margin-top:-60vh"><div class="c-hud c-blink">ENERGY RISING · 28%</div></div>', bell(e, .8, 6.2, .3, .3));
+  cue(ev, e, .3, () => { S.sweep(5, 100, 1800, .2, 3); story.chain = 3; save(); });
+} },
+{ id: 'chain4', cat: 'chain', dur: 9, run(e, fx, ev) {
+  fx.chainStage = 4; fx.chainPortal = eOut(prog(e, 1, 1.4)); fx.chainPulse = 1.5;
+  if (e > 1.4 && e < 7.4) card(fx, 'c4', '<div class="cin" style="margin-top:-60vh"><div class="c-hud c-blink">TEMPORAL FRACTURE OPENED</div></div>', bell(e, 1.4, 7.2, .3, .3));
+  flashAt(fx, e, 1, '120,255,190', .5, .6);
+  cue(ev, e, 1, () => { S.boom(.7, 100, 30, 1.2); S.sweep(3, 80, 600, .2, 1); story.chain = 4; save(); });
+} },
+{ id: 'chain5', cat: 'chain', dur: 9, run(e, fx, ev) {
+  fx.chainStage = 5; fx.chainPortal = 1 - .5 * bell(e, 2.5, 6, .6, .6) * (Math.sin(e * 14) > 0 ? 1 : .4); fx.chainPulse = 1.8;
+  const k = bell(e, .8, 6.6, 1.2, .8); if (k > 0) fx.tendrils.push({ p0: R.hand, p1: crackScreen(), k, th: Math.max(7, R.clayBox.width * .04) });
+  if (e > 1 && e < 7.4) card(fx, 'c5', '<div class="cin" style="margin-top:-60vh"><div class="c-hud c-blink">CONTAINMENT FAILING</div></div>', bell(e, 1, 7.2, .3, .3));
+  cue(ev, e, .8, () => { S.squelch(); story.chain = 5; save(); });
+} },
+{ id: 'chain6', cat: 'chain', dur: 10, run(e, fx, ev) {
+  fx.chainStage = e < 2 ? 5 : 7; fx.chainPortal = e < 2 ? 1 + .5 * prog(e, 0, 2) : 0; fx.chainPulse = 2;
+  const cp = crackScreen();
+  flashAt(fx, e, 2, '200,255,225', .8, 1); shock(fx, e, 2, cp[0], cp[1]); shakeAt(fx, e, 2, 24, .8);
+  if (e > 2 && e < 5) fx.shards = { list: ev.s.sh, spread: eOut(prog(e, 2, 2)), a: 1 - prog(e, 3.6, 1.2), color: '#9dffcc', glow: true, cx: cp[0], cy: cp[1] };
+  if (e > 4.6) card(fx, 'c6', '<div class="cin" style="margin-top:-60vh"><div class="c-mid c-gold" style="letter-spacing:.4em">SOMETHING GOLDEN REMAINS.</div></div>', bell(e, 4.8, 8.6, .6, .6));
+  fx.sparkBoost = bell(e, 4, 9, .5, 1);
+  cue(ev, e, 2, () => { S.boom(1, 100, 25, 2); story.chain = 7; save(); }); cue(ev, e, 4.8, () => S.chime());
+}, init(ev) { ev.s.sh = shardList(60, ['▮', '■', '◆']); } },
+/* ===== LAST 28 MINUTES: they work together ===== */
+{ id: 'coopBuild', cat: 'coop', dur: 9, run(e, fx, ev) {
+  fx.machine = { list: ev.s.parts, e: e * 1.4, a: 1 - prog(e, 7.6, 1), gold: 1 };
+  unitTendril(fx, 3, bell(e, .4, 6, .8, .8));
+  fx.baseClayGlow = .6; fx.rGold = .35 * bell(e, .5, 7.5, 1, 1);
+  if (e > .8 && e < 7.6) card(fx, 'cb', `<div class="cin" style="margin-top:-60vh"><div class="c-hud c-gold">ASSEMBLY ${ev.s.p}% · PURPOSE CLASSIFIED</div></div>`, bell(e, .8, 7.4, .3, .3));
+  cue(ev, e, .4, () => S.sweep(6, 200, 1600, .15, 3));
+}, init(ev) { ev.s.p = Math.max(72, Math.min(99, 72 + Math.round((28 * 60e3 - lastRem) / (28 * 60e3) * 27))); ev.s.parts = Array.from({ length: 160 }, (_, i) => { const a = i / 160 * 6.28; return { p: [795 + Math.cos(a) * 330, -60 + Math.sin(a) * 60], s: [rand(-.2, 1.2) * W, rand(1.05, 1.3) * H], d: rand(0, 3.5), dur: rand(1.4, 2.4), w: rand(6, 16), h: rand(3, 8), r: rand(-6, 6) }; }); } },
+{ id: 'coopLight', cat: 'coop', dur: 9, run(e, fx, ev) {
+  fx.baseClay = 1 - bell(e, 0, 8, .6, .8);
+  const up = eOut(prog(e, .5, 2.4)), lit = ramp(e, 3.6, 1.6);
+  sprite(fx, { x: ev.s.x, y: 1, h: .55, a: clamp(e * 2) * (1 - prog(e, 7.6, .8)), melt: 30 * (1 - lit) + 6, sx: .7, sy: 1 + .8 * up, br: .45 + .3 * lit, gold: lit * .8 });
+  if (e > 3.4 && e < 5.4) fx.scan = { y: 1 - eInOut(prog(e, 3.4, 1.8)), a: 1 };
+  fx.rGold = .5 * lit * (1 - prog(e, 7.6, .8));
+  if (e > 5) card(fx, 'cl2', '<div class="cin" style="margin-top:-60vh"><div class="c-hud c-gold">SHAPED BY CLAYFACE · LIT BY DOOMSDAY</div></div>', bell(e, 5, 8, .3, .4));
+  cue(ev, e, .5, () => S.squelch()); cue(ev, e, 3.6, () => { S.sweep(1.6, 300, 3000, .15, 6); S.chime(); });
+}, init(ev) { ev.s.x = pick([.22, .78]); } },
+{ id: 'coopSync', cat: 'coop', dur: 8, run(e, fx, ev) {
+  for (let i = 0; i < 4; i++) unitTendril(fx, i, bell(e, .4 + i * .2, 5.6, .6, .6));
+  fx.rings = { k: bell(e, .6, 6, 1, .6), rot: e * 30, lock: ramp(e, 4, .4), labels: true };
+  for (let i = 0; i < 4; i++) fx.cdMud[i] = .3 * bell(e, 1, 4, .6, .6);
+  flashAt(fx, e, 4, '255,214,140', .5, .5);
+  if (e > 4) card(fx, 'cs', '<div class="cin" style="margin-top:-60vh"><div class="c-hud c-gold">SYNCHRONIZED</div></div>', bell(e, 4, 7, .2, .4));
+  cue(ev, e, .4, () => S.squelch()); cue(ev, e, 4, () => { S.boom(.5, 120, 50, .8); S.chime(); });
+} },
 ];
 const EV_BY_ID = Object.fromEntries(EVENTS.map(ev => [ev.id, ev]));
 
 function intervalFor(rem) { return rem <= 600e3 ? 15 : rem <= 3600e3 ? 30 : rem <= 86400e3 ? 45 : 60; }
-function chooseEvent(maxDur) {
-  const recent = new Set(history.slice(-14)), r = Math.random();
-  const cat = r < .02 ? 'secret' : r < .56 ? 'clay' : r < .9 ? 'doom' : 'both';
+const BASE = ['clay', 'doom', 'both'];
+function chooseEvent(maxDur, coop) {
+  if (coop) return pick(EVENTS.filter(ev => ev.cat === 'coop' && ev.id !== history[history.length - 1]));
+  if (Math.random() < (unlocked ? .004 : .012)) return EV_BY_ID.incursion;
+  const recent = new Set(history.slice(-14)), r = Math.random(), clayW = clayLevelNow >= 5 ? .62 : .54;
+  const cat = r < .02 ? 'secret' : r < .02 + clayW ? 'clay' : r < .9 ? 'doom' : 'both';
   let pool = EVENTS.filter(ev => ev.cat === cat && ev.dur <= maxDur && !recent.has(ev.id));
-  if (!pool.length) pool = EVENTS.filter(ev => ev.cat !== 'secret' && ev.dur <= maxDur && ev.id !== history[history.length - 1]);
-  if (!pool.length) pool = EVENTS.filter(ev => ev.cat !== 'secret');
+  if (!pool.length) pool = EVENTS.filter(ev => BASE.includes(ev.cat) && ev.dur <= maxDur && ev.id !== history[history.length - 1]);
+  if (!pool.length) pool = EVENTS.filter(ev => BASE.includes(ev.cat));
   return pick(pool);
 }
 function startEvent(ev, tt) {
   cur = { ev, start: tt, fired: new Set(), s: {} };
   try { ev.init && ev.init(cur); } catch (e) {}
+  cur.msg = unlocked && BASE.includes(ev.cat) && Math.random() < .4 ? pick(['YOU SAW IT.', 'IT HAS ALREADY STARTED.']) : null;
+  story.seen++; if ((ev.cat === 'secret' || ev.cat === 'master') && !story.secrets.includes(ev.id)) story.secrets.push(ev.id); save();
   history.push(ev.id); history = history.slice(-20);
   try { localStorage.setItem('rochely-events', JSON.stringify(history)); } catch (e) {}
 }
@@ -1184,10 +1490,12 @@ function drawLights(tt, fx) {
     windows.forEach((wd, i) => { if ((i * 7919) % 100 < 38 * fx.gothamLit) lc.fillRect(wd.x * w, wd.y * h, wd.w * w, wd.h * h); });
   }
   if (fx.portal && !fx.portal.over) drawPortal(lc, vbm(795, 330, w, h), fx.portal, tt, Math.max(w, h));
+  // 28 windows of Gotham are always lit gold
+  lc.fillStyle = 'rgba(255,205,120,.55)'; for (const wd of win28) lc.fillRect(wd.x * w, wd.y * h, wd.w * w, wd.h * h);
 }
 function drawPortal(c, at, Pp, tt, scale) {
   if (Pp.k <= 0) return;
-  const [cx, cy] = at, hgt = scale * .5 * Pp.k, wid = scale * .07 * Pp.k;
+  const [cx, cy] = at, hgt = scale * .5 * Pp.k * (Pp.big || 1), wid = scale * .07 * Pp.k * (Pp.big || 1);
   c.save(); c.globalCompositeOperation = 'lighter';
   const g = c.createRadialGradient(cx, cy, 0, cx, cy, hgt * .9);
   g.addColorStop(0, `rgba(160,255,210,${.55 * Pp.k})`); g.addColorStop(.35, `rgba(61,255,158,${.25 * Pp.k})`); g.addColorStop(1, 'rgba(61,255,158,0)');
@@ -1203,6 +1511,7 @@ function drawPortal(c, at, Pp, tt, scale) {
     c.lineWidth = (pass === 2 ? 2 : pass === 1 ? 10 : 26) * DPR;
     c.shadowColor = 'rgba(61,255,158,1)'; c.shadowBlur = 30; c.stroke();
   }
+  if (hgt > 80) { c.shadowBlur = 0; c.globalCompositeOperation = 'source-over'; c.fillStyle = `rgba(230,255,240,${.35 * Pp.k})`; c.font = `600 ${Math.round(hgt * .05)}px ui-monospace, Menlo, monospace`; c.textAlign = 'center'; c.fillText('28.10', cx + wid * 1.6, cy - hgt * .3); }
   c.restore();
 }
 
@@ -1210,7 +1519,7 @@ let splash = [];
 const lowFog = Array.from({ length: 6 }, () => ({ x: rand(0, 1), v: rand(.006, .014) * (Math.random() < .5 ? -1 : 1), r: rand(.18, .32), a: rand(.07, .12) }));
 function camX(clientX) { const r = camera.getBoundingClientRect(); return (clientX - r.left) / r.width * front.width; }
 function clayFeetY() { return Math.min(clay.offsetTop + clay.offsetHeight, CH * .97) * front.height / CH; }
-function drawFront(mud, L, G) {
+function drawFront(mud, L, G, fx) {
   const w = front.width, h = front.height, [, fy] = vbm(0, 640, w, h);
   fx2.clearRect(0, 0, w, h);
   for (const f of lowFog) {
@@ -1232,6 +1541,13 @@ function drawFront(mud, L, G) {
     const gg = fx2.createRadialGradient(p.x - p.r * .3, p.y - p.r * .3, 0, p.x, p.y, p.r);
     gg.addColorStop(0, '#a0703f'); gg.addColorStop(.6, '#4a2f17'); gg.addColorStop(1, '#1d1209');
     fx2.fillStyle = gg; fx2.beginPath(); fx2.ellipse(p.x, p.y, p.r, p.r * 1.3, Math.atan2(p.vy, p.vx) + Math.PI / 2, 0, 6.29); fx2.fill();
+  }
+  // the chained microstory: a small fracture in the crack, or the golden spark it left behind
+  const st = fx.chainStage != null ? fx.chainStage : story.chain;
+  if (st >= 4 && mode !== 'bday') {
+    const [kx, ky] = vbm(crackVB[0], crackVB[1], w, h);
+    if (st <= 5) drawPortal(fx2, [kx, ky], { k: fx.chainPortal != null ? fx.chainPortal : .8, e: 0 }, tt0, Math.max(w, h) * .12);
+    if (st === 7) { const r = (8 + 4 * Math.sin(tt0 * 3) + 26 * fx.sparkBoost) * DPR, g = fx2.createRadialGradient(kx, ky, 0, kx, ky, r * 3); g.addColorStop(0, 'rgba(255,244,210,.95)'); g.addColorStop(.3, 'rgba(255,200,110,.55)'); g.addColorStop(1, 'rgba(255,200,110,0)'); fx2.fillStyle = g; fx2.fillRect(kx - r * 3, ky - r * 3, r * 6, r * 6); }
   }
 }
 function spawnSplash(xFrac) {
@@ -1308,18 +1624,18 @@ function drawTop(tt, L, G, rainK, glowRGB, fx) {
       m.y -= m.v / 60 * (1 + 3 * fx.rainUp); m.x += Math.sin(tt * .4 + m.tw) * .00008;
       if (fx.suck > 0) { m.x += (R.rC[0] / W - m.x) * .015 * fx.suck; m.y += (R.rC[1] / H - m.y) * .015 * fx.suck; }
       if (m.y < -.02) { m.y = 1.02; m.x = rand(0, 1); }
-      tx.fillStyle = `rgba(${glowRGB},${(.15 + .5 * (.5 + .5 * Math.sin(tt * 1.6 + m.tw))) * L})`;
+      tx.fillStyle = `rgba(${m.gold ? '255,205,110' : glowRGB},${(.15 + .5 * (.5 + .5 * Math.sin(tt * 1.6 + m.tw))) * Math.max(L, m.gold ? .6 : 0)})`;
       tx.beginPath(); tx.arc(m.x * w, m.y * h, m.r * D, 0, 6.29); tx.fill();
     }
   }
   tx.globalAlpha = 1;
   for (let i = skyBalloons.length - 1; i >= 0; i--) {
-    const b = skyBalloons[i]; b.y -= b.v * D; b.x += Math.sin(tt * b.w + b.ph) * .3 * D;
+    const b = skyBalloons[i]; b.y -= b.v * D; b.vx = (b.vx || 0) * .985; b.x += Math.sin(tt * b.w + b.ph) * .3 * D + b.vx;
     if (b.y < -b.s * 4 * D) { skyBalloons.splice(i, 1); continue; }
     drawBalloonCanvas(tx, b);
   }
   for (let i = confetti.length - 1; i >= 0; i--) {
-    const p = confetti[i]; p.f += p.vf; p.rot += p.vr; p.x += p.vx + Math.sin(p.f) * .6 * D; p.y += p.vy;
+    const p = confetti[i]; p.f += p.vf; p.rot += p.vr; p.vx *= .99; p.vy = Math.min(p.vy + .025 * D, 2.2 * D); p.x += p.vx + Math.sin(p.f) * .6 * D; p.y += p.vy;
     if (p.y > h + 20) { confetti.splice(i, 1); continue; }
     flake(tx, p.x, p.y, p.w, p.h, p.rot, p.f, p.c);
   }
@@ -1346,6 +1662,17 @@ function drawTop(tt, L, G, rainK, glowRGB, fx) {
     tx.globalAlpha = Math.min(1, p.life); tx.fillStyle = p.life > .6 ? p.c : 'rgb(255,214,140)'; tx.fillRect(p.x, p.y, p.s, p.s);
   }
   tx.globalAlpha = 1;
+  if (tparts.length && fx.tparts > 0) {
+    const a = fx.tparts; tx.save(); tx.globalCompositeOperation = 'lighter'; tx.fillStyle = 'rgba(255,214,140,.95)';
+    for (const p of tparts) {
+      if (a < 4.2) { const k = eInOut(prog(a, .6 + p.d, 1.6)); p.x = lerp(p.sx, p.tx, k); p.y = lerp(p.sy, p.ty, k) + (k >= 1 ? Math.sin(tt * 3 + p.tx * .05) * 1.5 : 0); }
+      else { p.vy += .08; p.x += p.vx; p.y += p.vy; }
+      tx.globalAlpha = a < 4.2 ? 1 : Math.max(0, 1 - (a - 4.2) / 3);
+      tx.fillRect(p.x * D, p.y * D, 2.4 * D, 2.4 * D);
+    }
+    tx.restore(); tx.globalAlpha = 1;
+    if (a > 8) tparts = [];
+  }
   for (const t of fx.tendrils) drawFinger(tx, t, tt);
   if (fx.carry && fx.carry.a > 0) { tx.save(); tx.globalAlpha = fx.carry.a; tx.font = `600 ${fx.carry.size * D}px Montserrat, sans-serif`; tx.textAlign = 'center'; tx.textBaseline = 'middle'; tx.fillStyle = '#e8dcc8'; tx.shadowColor = 'rgba(61,255,158,.7)'; tx.shadowBlur = 16; tx.fillText(fx.carry.ch, fx.carry.x * D, fx.carry.y * D); tx.restore(); }
   for (let i = drips.length - 1; i >= 0; i--) {
@@ -1371,8 +1698,8 @@ function drawTop(tt, L, G, rainK, glowRGB, fx) {
       const tp = new DOMPoint(p.p[0], p.p[1]).matrixTransform(m);
       const x = lerp(p.s[0], tp.x, k) * D, y = lerp(p.s[1], tp.y, k) * D;
       tx.save(); tx.translate(x, y); tx.rotate(p.r * (1 - k)); tx.globalAlpha = M2.a;
-      tx.fillStyle = k > .98 ? '#7dffbc' : '#1f2b26'; tx.fillRect(-p.w * D / 2, -p.h * D / 2, p.w * D, p.h * D);
-      tx.strokeStyle = 'rgba(125,255,188,.7)'; tx.lineWidth = 1; tx.strokeRect(-p.w * D / 2, -p.h * D / 2, p.w * D, p.h * D);
+      tx.fillStyle = k > .98 ? (M2.gold ? '#ffd98a' : '#7dffbc') : '#1f2b26'; tx.fillRect(-p.w * D / 2, -p.h * D / 2, p.w * D, p.h * D);
+      tx.strokeStyle = M2.gold ? 'rgba(255,214,140,.8)' : 'rgba(125,255,188,.7)'; tx.lineWidth = 1; tx.strokeRect(-p.w * D / 2, -p.h * D / 2, p.w * D, p.h * D);
       tx.restore();
     }
   }
@@ -1390,13 +1717,16 @@ function drawTop(tt, L, G, rainK, glowRGB, fx) {
   if (fx.slabs) {
     const sl = fx.slabs, cxr = R.row, sw = Math.max(40, W * .06);
     const slab = (x, y0, sw2, sh, k) => {
-      const y = lerp(-sh * 1.1, y0, k) - sl.up * (sh + y0 + 50);
+      const y = lerp(-sh * 1.1, y0, k) - sl.up * (sh + y0 + 50) + (sl.sag || 0) * H * .6;
+      tx.globalAlpha = 1 - (sl.sag || 0);
       const g = tx.createLinearGradient(x * D, 0, (x + sw2) * D, 0); g.addColorStop(0, '#26322d'); g.addColorStop(.5, '#0b110e'); g.addColorStop(1, '#1b2622');
       tx.fillStyle = g; tx.fillRect(x * D, y * D, sw2 * D, sh * D);
       tx.fillStyle = 'rgba(125,255,188,.75)'; tx.fillRect((x + sw2 - 3) * D, y * D, 2 * D, sh * D); tx.fillRect(x * D, (y + sh - 2) * D, sw2 * D, 2 * D);
+      if (sl.mud) { tx.globalAlpha = sl.mud * (1 - (sl.sag || 0)); tx.fillStyle = '#5a3b1d'; tx.fillRect(x * D, y * D, sw2 * D, sh * D); }
+      tx.globalAlpha = 1;
     };
-    slab(cxr.left - sw - 24, 0, sw, cxr.bottom + 30, sl.l); slab(cxr.right + 24, 0, sw, cxr.bottom + 30, sl.r);
-    slab(cxr.left - sw - 24, cxr.top - 70, cxr.width + 2 * sw + 48, 40, sl.t);
+    slab(cxr.left - sw - 24, 0, sw, cxr.bottom + 30, sl.l);
+    if (sl.only !== 'l') { slab(cxr.right + 24, 0, sw, cxr.bottom + 30, sl.r); slab(cxr.left - sw - 24, cxr.top - 70, cxr.width + 2 * sw + 48, 40, sl.t); }
   }
   if (fx.bolt) {
     const b = fx.bolt; let s = b.seed * 1000; const r2 = () => ((s = (s * 9301 + 49297) % 233280) / 233280 - .5);
@@ -1492,6 +1822,21 @@ function drawGrain() {
   for (let i = 0; i < d.length; i += 4) { const v = Math.random() * 255; d[i] = d[i + 1] = d[i + 2] = v; d[i + 3] = 255; }
   gx.putImageData(img, 0, 0);
 }
+let tparts = [];
+function buildTextParticles(txt, fx0, fy0) {
+  tparts = [];
+  const fs = Math.min(W * .085, H * .12), c = document.createElement('canvas'); c.width = Math.ceil(W); c.height = Math.ceil(fs * 1.5);
+  const x = c.getContext('2d'); x.font = `800 ${fs}px Montserrat, sans-serif`; x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillStyle = '#fff'; x.fillText(txt, c.width / 2, c.height / 2);
+  const d = x.getImageData(0, 0, c.width, c.height).data, st = Math.max(3, Math.round(fs / 20)), oy = H * .32 - c.height / 2;
+  for (let j = 0; j < c.height; j += st) for (let i = 0; i < c.width; i += st) if (d[(j * c.width + i) * 4 + 3] > 128) tparts.push({ tx: i, ty: oy + j, sx: fx0 + rand(-30, 30), sy: fy0 + rand(-30, 30), x: fx0, y: fy0, d: rand(0, .7), vx: rand(-1, 1), vy: rand(-1, .5) });
+}
+function emitConfettiAt(x, y, n) {
+  for (let i = 0; i < n; i++) { const a = rand(0, 6.28), v = rand(2, 9) * DPR; confetti.push({ x: x * DPR, y: y * DPR, vx: Math.cos(a) * v, vy: Math.sin(a) * v - 2 * DPR, rot: rand(0, 6.28), vr: rand(-.1, .1), w: rand(4, 9) * DPR, h: rand(2, 4.5) * DPR, c: CCOL[(Math.random() * CCOL.length) | 0], f: rand(0, 6.28), vf: rand(.05, .15) }); }
+}
+function disintegrateRect(b) {
+  if (!b || !b.width) return;
+  for (const [u, v, c] of clayPix) dust.push({ x: (b.left + u * b.width) * DPR, y: (b.top + v * b.height) * DPR, vx: rand(-2, 2) * DPR + (u - .5) * 3 * DPR, vy: rand(-3, .5) * DPR, s: rand(2, 4) * DPR, c, life: rand(.8, 1.2) });
+}
 function disintegrateClay() {
   const b = clayImg.getBoundingClientRect();
   for (const [u, v, c] of clayPix) dust.push({ x: (b.left + u * b.width) * DPR, y: (b.top + v * b.height) * DPR, vx: rand(-2, 2) * DPR + (u - .5) * 3 * DPR, vy: rand(-3, .5) * DPR, s: rand(2, 4) * DPR, c, life: rand(.8, 1.2) });
@@ -1508,7 +1853,7 @@ function renderSprites(list) {
     el.style.height = hp + 'px'; el.style.width = wp + 'px';
     el.style.transform = `translate(${o.x * W - wp / 2}px, ${o.y * H - hp}px) rotate(${o.rot}deg) scale(${o.sx * (o.flip ? -1 : 1)}, ${o.sy})`;
     el.style.opacity = o.a;
-    el.firstChild.style.filter = `brightness(${o.br}) contrast(1.2) saturate(.85)`;
+    el.firstChild.style.filter = `brightness(${o.br}) contrast(1.2) saturate(.85)${o.gold ? ` sepia(${o.gold.toFixed(2)})` : ''}`;
     setMelt(i + 1, o.melt, tt0 * 9 % 400);
   });
 }
@@ -1540,6 +1885,7 @@ function renderEyes(list) {
     el.style.width = wp + 'px';
     el.style.transform = `translate(${o.x * W - wp / 2}px, ${o.y * H - wp * .13}px) scaleY(${Math.max(.05, o.open)})`;
     el.style.opacity = Math.min(1, o.open * 1.4);
+    el.style.clipPath = o.half === 'l' ? 'inset(0 52% 0 0)' : o.half === 'r' ? 'inset(0 0 0 52%)' : '';
   });
   $('#eyesLayer').style.zIndex = list.length && fxDark > .3 ? 3 : '';
 }
@@ -1590,6 +1936,40 @@ function renderPanels(p, tt) {
   $('#panels').style.zIndex = p && p.a > .01 ? 3 : '';
 }
 
+const REAL_HTML = [
+  '<div class="ptxt c-gold">00:00:00:00</div><div class="psub">OCTOBER 28 · NOW</div>',
+  '<div class="ptxt">02:13:07:42</div><div class="psub" style="color:var(--mist)">TIMELINE B</div>',
+  '<div class="ptxt" style="color:#ff5a6e;text-shadow:0 0 12px rgba(255,60,90,.7)">ERR · ?? · ERR</div><div class="psub" style="color:#ff5a6e">REALITY LOST</div>',
+  '<svg viewBox="0 0 160 100"><path d="M40 61L44 98M80 53L78 98M120 63L124 98" stroke="#e7c06a" stroke-width="1"/><ellipse cx="40" cy="45" rx="15" ry="18" fill="#e7c06a"/><ellipse cx="80" cy="35" rx="17" ry="20" fill="#2fd487"/><ellipse cx="120" cy="47" rx="14" ry="17" fill="#222a26" stroke="#888" stroke-width="1"/></svg><div class="psub">CELEBRATION</div>',
+  `<img alt="" src="${clayImg.src}"><div class="psub" style="color:#c39058">CLAYFACE CONTROLS ALL</div>`,
+  '<div class="ptxt c-gold" style="font-size:min(2.6vw,3.4vh);letter-spacing:.2em;text-align:center">HAPPY BIRTHDAY<br>ROCHELY</div>'
+];
+const realEls = REAL_HTML.map((h, i) => { const d = document.createElement('div'); d.className = 'panel' + (i === 2 ? ' ruin' : ''); d.innerHTML = h; $('#realities').appendChild(d); return d; });
+function renderRealities(p) {
+  realEls.forEach((el, i) => {
+    if (!p || p.a <= .01 || (i === 5 && !p.hb)) { if (el.style.display !== 'none') el.style.display = 'none'; return; }
+    el.style.display = 'block';
+    const a = i / 5 * 6.28 + p.e * .5, rad = Math.min(W, H) * .36 * (1 - p.conv);
+    const x = i === 5 ? R.rC[0] : R.rC[0] + Math.cos(a) * rad * 1.3, y = i === 5 ? R.rC[1] : R.rC[1] + Math.sin(a) * rad * .8;
+    el.style.transform = `translate(${x}px, ${y}px) translate(-50%, -50%) rotate(${Math.sin(p.e * 2 + i) * 8 * (1 - p.conv)}deg) scale(${(1 - p.conv * .8) * (i === 5 ? 1.3 : 1)})`;
+    el.style.opacity = p.a * (Math.random() < .06 ? .3 : 1);
+  });
+}
+const monitor = $('#monitor'), monNum = $('#monNum');
+function renderMonitor(k, s, tX, tY) {
+  if (k <= .01) { if (monitor.style.display !== 'none') monitor.style.display = 'none'; return; }
+  monitor.style.display = 'grid';
+  const w = monGeo.w * s;
+  monitor.style.left = (monGeo.x - .03 * W + tX) + 'px'; monitor.style.top = (monGeo.y - .03 * H + tY) + 'px';
+  monitor.style.width = w + 'px'; monitor.style.height = w * .62 + 'px'; monitor.style.fontSize = w + 'px';
+  monitor.style.opacity = k; monNum.textContent = fmt(realS()).join(':');
+}
+const curtainEl = $('#curtain'), curL = curtainEl.children[0], curR = curtainEl.children[1];
+function renderCurtain(v) {
+  if (v < 0) { if (curtainEl.style.display !== 'none') curtainEl.style.display = 'none'; return; }
+  curtainEl.style.display = 'block'; curL.style.transform = `translateX(${-v * 100}%)`; curR.style.transform = `translateX(${v * 100}%)`;
+}
+
 /* ---------- controls ---------- */
 $('#soundBtn').addEventListener('click', e => {
   try {
@@ -1604,7 +1984,20 @@ $('#soundBtn').addEventListener('click', e => {
 const skipBtn = $('#skipBtn');
 function goLive(tt, quick) { mode = 'live'; liveStart = quick ? tt - 3 : tt; nextEventAt = tt + (quick ? 1 : 6); cur = null; skipBtn.hidden = true; }
 skipBtn.addEventListener('click', () => { if (mode === 'intro') goLive(tt0, true); });
-$('#replayBtn').addEventListener('click', () => { if (mode === 'live') { mode = 'intro'; introStart = performance.now(); cur = null; confetti = []; splash = []; skipBtn.hidden = false; } });
+$('#replayBtn').addEventListener('click', () => {
+  if (mode === 'live') { mode = 'intro'; introStart = performance.now(); cur = null; confetti = []; splash = []; skipBtn.hidden = false; }
+  else if (mode === 'bday') { bdayStart = tt0; bdayFrom = 0; fin = {}; skyBalloons = []; tparts = []; confetti = []; }
+});
+// secret: tap the giant R three times
+let taps = [];
+$('#stage').addEventListener('pointerdown', e => {
+  if (mode !== 'live' || (cur && cur.ev.cat === 'master')) return;
+  const m = Rscale.getScreenCTM(); if (!m) return;
+  const a = new DOMPoint(560, 40).matrixTransform(m), b = new DOMPoint(1030, 640).matrixTransform(m);
+  if (e.clientX < a.x || e.clientX > b.x || e.clientY < a.y || e.clientY > b.y) return;
+  const now = performance.now(); taps = taps.filter(t2 => now - t2 < 1400); taps.push(now);
+  if (taps.length >= 3) { taps = []; startEvent(EV_BY_ID.incursion, tt0); nextEventAt = tt0 + EV_BY_ID.incursion.dur + 5; }
+});
 
 /* ---------- main loop ---------- */
 const START = performance.now();
@@ -1624,55 +2017,127 @@ function frame(now) {
   pulse *= Math.exp(-dt * 5.5);
 
   /* --- mode transitions --- */
-  if (mode === 'intro' && (reduce || forced || ogMode || HASH === 'live' || HASH === 'final')) goLive(tt, true);
-  if (ts.isDay && mode !== 'bday') { bdayFrom = mode === 'final' ? 0 : 1.2; mode = 'bday'; bdayStart = tt; cur = null; skipBtn.hidden = true; }
-  if (!ts.isDay && mode === 'bday') location.reload();
+  if (mode === 'intro' && (reduce || forced || ogMode || HASH === 'live' || HASH === 'final' || /^(visit|lvl|chain)\d+$/.test(HASH) || HASH === 'seen')) goLive(tt, true);
+  if (ts.isDay && mode !== 'bday') { bdayFrom = (story.done || HASH === 'bdayagain') && HASH !== 'bday' ? 40 : 0; fin = bdayFrom ? { snap: 1, rise: 1, smile: 1, flame: 1, bolt: 1 } : {}; mode = 'bday'; bdayStart = tt; cur = null; skipBtn.hidden = true; $('#replayBtn').textContent = 'Replay finale'; if (bdayFrom) emitConfetti(80); }
   if (!ts.isDay && ts.rem <= 60000 && (mode === 'live' || mode === 'intro')) { mode = 'final'; cur = null; skipBtn.hidden = true; }
   let t = mode === 'intro' ? (now - introStart) / 1000 : T.end;
   if (mode === 'intro' && t >= T.end) { goLive(tt, false); t = T.end; }
 
   /* --- events (live) --- */
   const fx = FX0();
+  clayLevelNow = clayLevel(ts.rem);
   if (mode === 'live' && !reduce && !ogMode) {
-    if (!cur && tt >= nextEventAt) {
-      const iv = intervalFor(ts.rem), ev = forced || chooseEvent(iv - 2);
-      startEvent(ev, tt); nextEventAt = tt + (forced ? ev.dur + 4 : iv);
+    const fm = fmt(realSec), hourKey = fm[0] + fm[1], busy = cur && (cur.ev.cat === 'master' || cur.ev.id === 'nextAnomaly');
+    const coop = ts.rem <= 28 * 60e3;
+    if (!forced && !busy) {
+      let sp = null;
+      if (!greeted && tt - liveStart > 4 && visitNo >= 2) { greeted = true; sp = EV_BY_ID.greet; }
+      else if (coop && !finalPhaseShown) { finalPhaseShown = true; sp = EV_BY_ID.finalPhase; }
+      else if (fm[2] === '28' && +fm[3] >= 40 && m28Key !== hourKey) { m28Key = hourKey; sp = EV_BY_ID.minute28; }
+      else if (fm[2] === '28' && fm[3] === '28' && a28Key !== hourKey) { a28Key = hourKey; sp = EV_BY_ID.anomaly2828; }
+      else if (ts.rem <= 86400e3 && !coop && (!cur || cur.ev.cat === 'response')) { const h = Math.floor(ts.rem / 3600e3); if (!story.hours.includes(h)) { story.hours.push(h); save(); hourShown = h; sp = EV_BY_ID.hourReveal; } }
+      if (sp) { startEvent(sp, tt); nextEventAt = tt + Math.max(intervalFor(ts.rem), sp.dur + 3); }
     }
-    if (cur) { const e = tt - cur.start; if (e > cur.ev.dur) cur = null; else cur.ev.run(e, fx, cur); }
-    if (tt > nextLt) { nextLt = tt + rand(9, 22); ltAt = tt; S.thunder(); }
-    const k = tt - ltAt; if (k > 0 && k < .5) fx.lightning = Math.max(fx.lightning, k < .08 ? 1 : k < .16 ? .2 : k < .24 ? .7 : 0);
+    if (cur && tt - cur.start > cur.ev.dur) {
+      const done = cur; cur = null;
+      if (done.ev.id === 'nextAnomaly' && done.s.next) { startEvent(done.s.next, tt); nextEventAt = tt + Math.max(intervalFor(ts.rem), done.s.next.dur + 3); }
+      else if (done.ev.cat === 'clay' && !coop && nextEventAt - tt > 4) startEvent(EV_BY_ID.restore, tt);
+    }
+    if (!cur && tt >= nextEventAt) {
+      const iv = intervalFor(ts.rem); let ev;
+      if (forced) ev = forced;
+      else if (story.chain >= 1 && story.chain <= 5 && !coop) ev = EV_BY_ID['chain' + (story.chain + 1)];
+      else if (story.chain === 0 && !coop && Math.random() < .18) ev = EV_BY_ID.chain1;
+      else if (!coop && iv >= 30 && Math.random() < .12) ev = EV_BY_ID.nextAnomaly;
+      else ev = chooseEvent(iv - 2, coop);
+      startEvent(ev, tt); nextEventAt = tt + (forced ? ev.dur + 4 : Math.max(iv, ev.dur + 3));
+    }
+    if (cur) cur.ev.run(tt - cur.start, fx, cur);
+    // ambient life: lightning (sometimes Gotham's windows spell 28), the watcher, a 28 ms glitch every 2.8 minutes
+    if (tt > nextLt) { nextLt = tt + rand(9, 22); ltAt = tt; lt28 = Math.random() < .3; S.thunder(); }
+    const k = tt - ltAt; if (k > 0 && k < .5) { fx.lightning = Math.max(fx.lightning, k < .08 ? 1 : k < .16 ? .2 : k < .24 ? .7 : 0); if (lt28 && k < .3) fx.lights28 = Math.max(fx.lights28, 1); }
+    if (visitNo >= 3 && !cur && tt > watchAt) { watchAt = tt + rand(35, 70); watchStart = tt; watchPos = [Math.random() < .5 ? rand(.04, .18) : rand(.82, .96), rand(.15, .8)]; }
+    const wk = bell(tt - watchStart, 0, 2.4, .25, .3); if (wk > 0 && fx.dark < .3) fx.eyes.push({ x: watchPos[0], y: watchPos[1], s: .03, open: wk });
+    const gs = Math.floor(tt / 168); if (gs !== g28Slot) { g28Slot = gs; g28At = tt + rand(5, 150); }
+    if (tt > g28At && tt - g28At < .028) { fx.screenGlitch = Math.max(fx.screenGlitch, .9); card(fx, 'g28', '<div class="cin"><div class="c-huge" style="opacity:.3">28</div></div>', 1); }
   }
   spinAcc += fx.raysSpin * dt;
   if (ogMode) { fx.baseClay = 0; fx.roch = 0; }
 
   /* --- final minute --- */
-  let finalK = 0, G = 0;
+  let finalK = 0, G = 0, finalRoch = 0;
   if (mode === 'final') {
     const sl = Math.max(1, Math.ceil(ts.rem / 1000)), urg = clamp(1 - ts.rem / 60000);
     finalK = 1; fx.dark = .62 + .25 * urg; fx.cdHide = 1; fx.head = 0; fx.baseClayBright = .2 * urg; fx.baseClayGlow = urg;
     fx.raysMul = 1 + 2 * urg; fx.shake = urg > .8 ? 18 * (urg - .8) / .2 * pulse : 0;
     fx.screenGlitch = sl <= 10 && Math.random() < .08 ? .6 : 0;
     for (let i = 0; i < Math.floor(urg * 10); i++) fx.eyes.push({ x: [.08, .92, .15, .85, .05, .95, .25, .75, .1, .9][i], y: [.2, .25, .7, .72, .45, .5, .1, .12, .88, .9][i], s: .035, open: .9 });
+    const tf = clamp(1 - ts.rem / 28000);
+    if (tf > 0) {
+      G = tf * .85; fx.gothamLit = tf; fx.rGold = sl <= 5 ? 1 : tf * .6; fx.dark = lerp(fx.dark, .15, tf); fx.eyes.length = Math.floor(fx.eyes.length * (1 - tf));
+      fx.screenGlitch = 0; fx.raysMul = 1 + 2 * (1 - tf) + tf; fx.shake = 0;
+      if (sl <= 4) finalRoch = 1;
+      if (sl <= 3) fx.mute = 1;
+      if (sl === 2) fx.shocks.push({ x: W / 2, y: H / 2, r: (ts.rem % 1000) / 1000, a: 1 - (ts.rem % 1000) / 1000, col: '255,214,140' });
+      if (sl === 1) fx.dark = 1;
+    }
     fNum.textContent = sl; fNum.style.transform = `scale(${1 + .12 * pulse})`;
-    fNum.style.color = sl <= 10 ? `rgb(255,${Math.round(lerp(255, 205, urg))},${Math.round(lerp(255, 120, urg))})` : '';
-    if (newSecond) { if (sl <= 10) S.boom(.6, 90, 40, .6); else S.tick(.12, 1500); }
+    fNum.style.color = sl <= 28 ? `rgb(255,${Math.round(lerp(255, 205, tf))},${Math.round(lerp(255, 110, tf))})` : '';
+    if (newSecond && sl !== 3) { if (sl <= 10) S.boom(.6, 90, 40, .6); else S.tick(.12, 1500); }
   }
-  /* --- birthday --- */
+  /* --- birthday: the page was never failing; it was building something --- */
   const B = mode === 'bday' ? tt - bdayStart + bdayFrom : 0;
   if (mode === 'bday') {
-    if (B < 1.2) { fx.cdText = ['00', '00', '00', '00']; fx.lightMul = .4; fx.head = 0; }
-    else if (B < 2.6) { fx.dark = 1; fx.cdHide = 1; fx.head = 0; }
-    else {
-      G = eOut(prog(B, 2.6, 3)); fx.cdHide = 1; fx.head = 0;
-      fx.baseClay = B < 2.7 ? 1 : 0; fx.gothamLit = G; fx.rGold = 1;
-      flashAt(fx, B, 2.6, '255,214,140', 1.4, 1); shock(fx, B, 2.6, R.rC[0], R.rC[1], '255,205,120', 2); shock(fx, B, 2.9, W / 2, H / 2, '255,230,170', 2.4);
-      if (!bdayFired) { bdayFired = true; disintegrateClay(); emitConfetti(160); S.boom(1.2, 80, 20, 3); S.braam(.5, 55); S.pad(14); S.chime(); }
-      if (B > 3.5 && Math.random() < .045 && skyBalloons.length < 46) skyBalloons.push({ x: rand(.02, .98) * top.width, y: top.height + 60 * DPR, s: rand(10, 26), v: rand(.6, 1.4), c: pick([PAL.gold, PAL.emerald, PAL.black, PAL.gold]), w: rand(.5, 1.2), ph: rand(0, 6) });
-      if (B > 3.2 && tt > nextFw) { nextFw = tt + rand(.6, 2.2); fireworks.push({ x: rand(.15, .85) * top.width, y: top.height, vy: -rand(9, 13) * DPR, c: pick(['255,214,140', '255,240,210', '120,255,190', '255,190,90']) }); }
-      if (B > 6 && Math.random() < .02) emitConfetti(6);
+    const PB = 11.8;
+    fx.baseClay = 0;
+    if (B < 1.2) { fx.cdText = ['00', '00', '00', '00']; fx.lightMul = .45; fx.head = 0; fx.baseClay = 1; }
+    else if (B < PB) {
+      fx.cdHide = 1; fx.head = 0; fx.roch = 0; fx.hideBalloons = 1;
+      fx.camZoom = { s: lerp(1, .42, eInOut(prog(B, 1.6, 5.8))), o: [rcGeo.x, rcGeo.y] };
+      fx.worldFade = 1 - ramp(B, 1.8, 2.5); fx.cake = ramp(B, 1.8, 2.4); fx.mute = B < 2.2 || B > 9.6 ? 1 : 0;
+      for (const [a, b, s] of [[2.6, 3.8, 'EVERY GLITCH.'], [3.8, 5, 'EVERY FRACTURE.'], [5, 6.2, 'EVERY PIECE OF MUD.'], [6.2, 7.8, 'WAS BUILDING SOMETHING.']])
+        if (B > a && B < b) card(fx, 'fl' + a, `<div class="cin" style="margin-top:-62vh"><div class="${b - a > 1.3 ? 'c-big' : 'c-mid'}" style="color:var(--ink)">${s}</div></div>`, bell(B, a, b - .15, .25, .15));
+      const cp = cakePoint(250, 900);
+      if (B > 7.2) sprite(fx, { x: cp[0] / W, y: cp[1] / H, h: .17, a: clamp((B - 7.2) * 3), melt: 14, br: .55 });
+      fx.flame = ramp(B, 8.2, .5);
+      if (B > 8.9 && B < 9.3) { fx.bolt = { a: 1 - (B - 8.9) / .4, seed: 7 }; fx.lightMul = 2.2; }
+      flashAt(fx, B, 8.9, '120,255,190', .6, .8); shock(fx, B, 8.9, R.rC[0], R.rC[1]);
+      if (B > 9.6) fx.dark = .3;
+      if (B > 10.5) { const sr = spriteEls[0].getBoundingClientRect(); fx.eyes.push({ x: (sr.left + sr.width * .565) / W, y: (sr.top + sr.height * .072) / H, s: Math.max(.012, sr.width * .1 / (2.2 * Math.min(W, H))), open: ramp(B, 10.5, .3) }); }
+      if (!fin.rise && B > 1.2) { fin.rise = 1; S.sweep(7, 60, 900, .18, 1); }
+      if (!fin.flame && B > 8.2) { fin.flame = 1; S.chime(); }
+      if (!fin.bolt && B > 8.9) { fin.bolt = 1; S.thunder(); S.boom(.8, 100, 30, 1.4); }
+      if (!fin.smile && B > 10.5) { fin.smile = 1; S.boom(.4, 70, 40, 1); }
+    } else {
+      G = eOut(prog(B, PB, .45)); fx.cdHide = 1; fx.head = 0; fx.gothamLit = G; fx.rGold = 1; fx.cake = 1; fx.flame = 1;
+      fx.camZoom = { s: lerp(.42, 1, eInOut(prog(B, PB + 1.2, 3.6))), o: [rcGeo.x, rcGeo.y] };
+      fx.worldFade = ramp(B, PB + 2, 2.6); fx.roch = ramp(B, PB + 4, 1.8); fx.hideBalloons = 1 - ramp(B, PB + 3, 2);
+      fx.baseClayRelax = ramp(B, PB + 6, 2); fx.baseClay = fx.baseClayRelax;
+      flashAt(fx, B, PB, '255,214,140', 1.2, 1); shock(fx, B, PB, R.rC[0], R.rC[1], '255,205,110', 2); shock(fx, B, PB + .3, W / 2, H / 2, '255,230,170', 2.4);
+      if (B < PB + 1.4) fx.portal = { k: 1 - eIn(prog(B, PB, 1.4)), e: B, big: 2 };
+      if (!fin.snap) { fin.snap = 1; disintegrateRect(spriteEls[0].getBoundingClientRect()); emitConfettiAt(R.rC[0], R.rC[1], 260); buildTextParticles('HAPPY BIRTHDAY', R.rC[0], R.rC[1]); S.boom(1.2, 80, 20, 3); S.braam(.5, 55); S.pad(16); S.chime(); }
+      if (B < PB + 3 && Math.random() < .6) skyBalloons.push({ x: R.rC[0] * DPR, y: R.rC[1] * DPR, vx: rand(-5, 5) * DPR, s: rand(10, 24), v: rand(1, 2.4), c: pick([PAL.gold, PAL.emerald, PAL.black, PAL.gold]), w: rand(.5, 1.2), ph: rand(0, 6) });
+      if (B > PB + 2 && Math.random() < .045 && skyBalloons.length < 60) skyBalloons.push({ x: rand(.02, .98) * top.width, y: top.height + 60 * DPR, vx: 0, s: rand(10, 26), v: rand(.6, 1.4), c: pick([PAL.gold, PAL.emerald, PAL.black, PAL.gold]), w: rand(.5, 1.2), ph: rand(0, 6) });
+      if (B > PB + 1 && tt > nextFw) { nextFw = tt + rand(.6, 2.2); fireworks.push({ x: rand(.15, .85) * top.width, y: top.height, vy: -rand(9, 13) * DPR, c: pick(['255,214,140', '255,240,210', '120,255,190', '255,190,90']) }); }
+      if (B > PB + 6 && Math.random() < .02) emitConfetti(6);
+      fx.tparts = B - PB;
+      if (B > PB + 12 && !story.done && !simBday) { story.done = true; save(); }
     }
-  } else bdayFired = false;
+  }
   fxDark = fx.dark;
+  if (fx.freeze) { lastT = t; requestAnimationFrame(frame); return; }
+  if (AC && droneGain) { const mt = fx.mute ? 0 : 1; if (mt !== lastMute) { lastMute = mt; droneGain.gain.setTargetAtTime(.045 * mt, AC.currentTime, .05); } }
+  // slow transformation over the last 40 hours: black + green slowly gains gold
+  const goldAmb = mode === 'live' || mode === 'final' ? clamp((40 * 3600e3 - ts.rem) / (40 * 3600e3)) : 0;
+  fx.rGold = Math.max(fx.rGold, goldAmb * .16); fx.lightMul *= 1 + .18 * goldAmb;
+  for (let i = 0; i < motes.length; i++) motes[i].gold = i < 28 && (unlocked || goldAmb > .15);
+  bEls[6].el.style.setProperty('--g', mode === 'bday' ? '' : (goldAmb * .8).toFixed(3));
+  if (mode === 'live' && !ogMode) {
+    const lvl = clayLevelNow, b2 = R.clayBox;
+    const face = { x: (b2.left + b2.width * .565) / W, y: (b2.top + b2.height * .072) / H, s: Math.max(.012, b2.width * .1 / (2.2 * Math.min(W, H))) };
+    if (lvl === 0) { fx.puddle = Math.max(fx.puddle, .15); const ds = Math.floor(tt / 28); if (ds !== dropSlot) { dropSlot = ds; drips.push({ x: (R.rC[0] + rand(-40, 40)) * DPR, y: (R.rTop[1] + 30) * DPR, vy: 0, r: 3 * DPR, max: R.floorY * DPR }); } }
+    if ((lvl === 1 || lvl === 3 || lvl >= 5 || unlocked) && fx.baseClay > .5 && fx.dark < .3 && !fx.camZoom) fx.eyes.push({ x: face.x, y: face.y, s: face.s, open: (lvl === 1 ? .7 : 1) * (Math.sin(tt * .7) > -.95 ? 1 : .1) });
+  }
 
   /* --- derived globals --- */
   const glowRGB = [lerp(61, 255, G), lerp(255, 198, G), lerp(158, 100, G)].map(Math.round).join(',');
@@ -1691,7 +2156,7 @@ function frame(now) {
   root.style.setProperty('--glow', glowRGB);
   root.style.setProperty('--gl', fx.cdGlitch.toFixed(3));
   root.style.setProperty('--cdv', (cdVis * worldK * (1 - fx.cdHide)).toFixed(3));
-  if (rainGain && soundOn) rainGain.gain.value = .035 * (1 - G) * worldK * (1 - fx.dark * .8);
+  if (rainGain && soundOn) rainGain.gain.value = .035 * (1 - G) * worldK * (1 - fx.dark * .8) * (fx.mute ? 0 : 1);
 
   /* --- camera --- */
   smx += (mx - smx) * .04; smy += (my - smy) * .04;
@@ -1701,10 +2166,13 @@ function frame(now) {
   if (mode === 'intro') rumble = Math.max(prog(t, T.melt, 1.6) * .3 * (1 - prog(t, T.rise + .6, 1)), Math.max(0, 1 - Math.abs(t - (T.rise + .3)) / .9) * (t > T.rise ? 1 : .25));
   const sh = reduce ? 0 : rumble * 8 + fx.shake + lightning * 1.5;
   const sx = (Math.sin(tt * 61) + Math.sin(tt * 37)) * sh, sy = (Math.cos(tt * 53) + Math.sin(tt * 29)) * sh;
-  camera.style.transform = `translate(${-smx * 12 + sx + fx.camX}px, ${-smy * 8 + sy + fx.camY}px) rotate(${fx.camRot}deg) scale(${scale})`;
+  if (fx.camZoom) camera.style.transformOrigin = `${fx.camZoom.o[0]}px ${fx.camZoom.o[1]}px`; else if (camera.style.transformOrigin !== camOrigin) camera.style.transformOrigin = camOrigin;
+  const camTX = -smx * 12 + sx + fx.camX, camTY = -smy * 8 + sy + fx.camY;
+  camera.style.transform = `translate(${camTX}px, ${camTY}px) rotate(${fx.camRot}deg) scale(${fx.camZoom ? fx.camZoom.s : scale})`;
   camera.style.filter = fx.tintMud > .01 ? `sepia(${(.7 * fx.tintMud).toFixed(2)}) saturate(${(1 - .2 * fx.tintMud).toFixed(2)}) hue-rotate(${(-12 * fx.tintMud).toFixed(1)}deg)` : '';
   gotham.style.transform = `translate(${smx * 10 + Math.sin(tt * 47) * fx.gothamShake}px, ${Math.cos(tt * 41) * fx.gothamShake * .5}px)`;
-  gotham.style.opacity = (mode === 'intro' ? eOut(prog(t, T.gotham, 3)) : 1) * (.75 + lightning * .6) * (1 - .92 * fx.gothamDark);
+  gotham.style.opacity = (mode === 'intro' ? eOut(prog(t, T.gotham, 3)) : 1) * (.75 + lightning * .6) * (1 - .92 * fx.gothamDark) * fx.worldFade;
+  sky.style.opacity = fx.worldFade; glights.style.opacity = fx.worldFade; rays.style.opacity = fx.worldFade; front.style.opacity = fx.worldFade;
   gotham.style.filter = G > .01 ? `brightness(${(1 + 1.4 * G).toFixed(2)}) sepia(${(.5 * G).toFixed(2)})` : '';
   sky.style.filter = G > .01 ? `brightness(${(1 + 2.5 * G).toFixed(2)}) sepia(${(.6 * G).toFixed(2)}) hue-rotate(${(-20 * G).toFixed(1)}deg)` : '';
   flash.style.opacity = lightning;
@@ -1741,6 +2209,22 @@ function frame(now) {
   clayImg.style.filter = `brightness(${((.34 + .2 * eOut(r)) * (1 - side * .45) + flashClay + fx.baseClayBright).toFixed(3)}) contrast(1.2) saturate(${Math.max(0, .85 - side * .3 - metal * .55).toFixed(2)})${metal ? ` grayscale(${metal.toFixed(2)})` : ''}`;
   clayNum.style.opacity = Math.max((1 - side) * cdVis * (.55 + .45 * pulse), fx.baseClayGlow).toFixed(3);
   claySide.style.opacity = (side * .97 * (1 - fx.baseClayGlow * .7)).toFixed(3);
+  {
+    const lvl = clayLevelNow, evUses = fx.baseClayGlow || fx.baseClayMetal || fx.baseClayX || fx.baseClayMelt || fx.baseClayBright;
+    let clip = '', vis = 1;
+    if (mode === 'live' && !evUses) { if (lvl <= 1) vis = 0; else if (lvl === 2) clip = 'inset(50% 0 0 38%)'; else if (lvl === 3) clip = 'inset(0 0 70% 0)'; }
+    if (mode === 'bday') { vis = fx.baseClayRelax; clayImg.style.filter += ' sepia(.55) brightness(1.15)'; }
+    if (clay.style.clipPath !== clip) clay.style.clipPath = clip;
+    clay.style.opacity = (parseFloat(clay.style.opacity) * vis).toFixed(3);
+  }
+  $('#rcracks').setAttribute('opacity', mode !== 'bday' && (unlocked || (mode !== 'intro' && clamp((40 * 3600e3 - ts.rem) / (40 * 3600e3)) > .35)) ? '1' : '0');
+  {
+    const cst = fx.chainStage != null ? fx.chainStage : story.chain;
+    $('#chainCrack').setAttribute('opacity', cst >= 1 && cst <= 6 && mode !== 'bday' ? '1' : '0');
+    const ccg = $('#ccGlow'); ccg.setAttribute('stroke-opacity', (cst >= 2 ? .55 + .45 * Math.sin(tt * (3 + fx.chainPulse * 3)) : .3).toFixed(2)); ccg.setAttribute('stroke-width', cst >= 3 ? 5 + fx.chainPulse * 2 : 3);
+    $('#ccBranch').setAttribute('opacity', cst >= 3 ? 1 : 0);
+  }
+  $('#cake').setAttribute('opacity', fx.cake.toFixed(3)); root.style.setProperty('--flame', fx.flame.toFixed(3));
 
   /* --- intro-only beats --- */
   const introT = mode === 'intro' ? t : -100;
@@ -1760,7 +2244,7 @@ function frame(now) {
   const lv = mode === 'live' || mode === 'final' ? eInOut(clamp((tt - liveStart) / 2.5)) : 0;
   const lay = narrow ? [13, 42, 8, 36] : [6, 60, 3, 47];
   const rTop = lerp(lay[0], lay[2], lv), rH = lerp(lay[1], lay[3], lv);
-  roch.style.opacity = (rsK * fx.roch * (mode === 'final' ? .35 : 1) * (mode === 'bday' ? eOut(prog(B, 4.4, 1.6)) : 1)).toFixed(3);
+  roch.style.opacity = (rsK * fx.roch * (mode === 'final' ? (finalRoch ? 1 : .35) : 1)).toFixed(3);
   roch.style.transform = `translateX(calc(-50% + ${(smx * 16 + Math.sin(tt * .3) * 5).toFixed(1)}px)) translateY(${((rTop - lay[0]) / 100 * CH + (1 - rsK) * 12).toFixed(1)}px) scale(${((rH / lay[1]) * (1.04 - .04 * rsK)).toFixed(4)})`;
   rochImg.style.filter = `brightness(${(.05 + .95 * rv + .25 * fx.rochGold + .15 * G).toFixed(3)}) contrast(${(1.08 - .04 * rv).toFixed(3)}) saturate(${(.55 + .4 * rv).toFixed(3)}) drop-shadow(0 0 1.5px rgba(${glowRGB},${(.95 - .4 * rv).toFixed(2)})) drop-shadow(0 0 24px rgba(${glowRGB},${(.6 - .25 * rv).toFixed(2)}))`;
   rochGold.style.opacity = (rv * (.28 + .5 * G + .6 * fx.rochGold) * (.85 + .15 * Math.sin(tt * .8))).toFixed(3);
@@ -1794,7 +2278,9 @@ function frame(now) {
   cd.style.filter = cdVis < 1 || fx.cdBlur ? `blur(${((1 - cdVis) * 10 + fx.cdBlur).toFixed(1)}px)` : '';
   row.style.transform = fx.cdGlitch > .2 ? `translate(${(rand(-1, 1) * 8 * fx.cdGlitch).toFixed(1)}px, ${(rand(-1, 1) * 3 * fx.cdGlitch).toFixed(1)}px)` : '';
   refl.style.opacity = (.3 * (1 + .5 * pulse)).toFixed(3);
-  head.style.opacity = (lv * fx.head * (1 - fx.cdHide)).toFixed(3);
+  head.style.opacity = (lv * fx.head * (1 - fx.cdHide) * (fx.headFlicker ? (Math.random() < .5 ? .2 : 1) : 1)).toFixed(3);
+  if (fx.headMud > .01) { const m = fx.headMud; head.style.color = `rgb(${Math.round(lerp(243, 122, m))},${Math.round(lerp(247, 85, m))},${Math.round(lerp(245, 48, m))})`; head.style.filter = 'url(#hmelt)'; $('#hmeltMap').setAttribute('scale', (m * 26).toFixed(1)); $('#hmeltFlow').setAttribute('dy', (tt * 25 % 300).toFixed(1)); }
+  else if (head.style.filter) { head.style.color = ''; head.style.filter = ''; }
   if (fx.cdSplit > 0) {
     const gap = fx.cdSplit * rowH * .7 * cs;
     fx.cdClones.push({ t: disp, dy: -gap / (rowH * cs), a: 1, clip: 'inset(0 0 50% 0)' }, { t: disp, dy: gap / (rowH * cs), a: 1, clip: 'inset(50% 0 0 0)' });
@@ -1803,7 +2289,7 @@ function frame(now) {
 
   /* --- poster (birthday) --- */
   if (mode === 'bday') {
-    [5.4, 6.2, 7.4, 8.2].forEach((at, i) => { const q = eOut(prog(B, at, 1.4)); P[i].style.opacity = q; P[i].style.transform = i === 1 ? `scale(${1.06 - .06 * q})` : `translateY(${(1 - q) * 8}px)`; if (i === 1) P[i].style.filter = `blur(${((1 - q) * 14).toFixed(1)}px) drop-shadow(0 0 .14em rgba(255,198,100,.45))`; });
+    [16.8, 17.6, 18.4, 20.2, 21.8].forEach((at, i) => { const q = eOut(prog(B, at, 1.4)); P[i].style.opacity = q; P[i].style.transform = i === 1 ? `scale(${1.06 - .06 * q})` : `translateY(${(1 - q) * 8}px)`; if (i === 1) P[i].style.filter = `blur(${((1 - q) * 14).toFixed(1)}px) drop-shadow(0 0 .14em rgba(255,198,100,.45))`; });
   } else P.forEach(p => { if (p.style.opacity !== '0') p.style.opacity = 0; });
 
   /* --- balloons --- */
@@ -1812,7 +2298,7 @@ function frame(now) {
     const x = lerp(bb.from[0], bb.rest[0], drift), y = lerp(bb.from[1], bb.rest[1], drift);
     const bob = Math.sin(tt * bb.w + bb.ph) * (.6 + 1.2 * G), rot = Math.sin(tt * bb.w * .7 + bb.ph) * (2 + 3 * G);
     bb.el.style.transform = `translate(calc(${x.toFixed(2)}vw - 50%), calc(${y.toFixed(2)}vh + ${bob.toFixed(2)}vmin)) rotate(${rot.toFixed(2)}deg)`;
-    bb.el.style.opacity = ((mode === 'intro' ? eOut(prog(t, 6.2, 3)) : 1) * (ogMode ? 0 : 1)).toFixed(3);
+    bb.el.style.opacity = ((mode === 'intro' ? eOut(prog(t, 6.2, 3)) : 1) * (ogMode ? 0 : 1) * (1 - fx.hideBalloons)).toFixed(3);
   }
 
   /* --- pure Doomsday moment (intro) --- */
@@ -1829,6 +2315,7 @@ function frame(now) {
   finalEl.style.opacity = finalK;
 
   /* --- event elements --- */
+  renderRealities(fx.realities); renderMonitor(fx.monitor, fx.camZoom ? fx.camZoom.s : 1, camTX, camTY); renderCurtain(fx.curtain);
   renderSprites(fx.clays); renderGiant(fx.giant); renderEyes(fx.eyes); renderCard(fx.card); renderClayText(fx.clayTextO); renderPanels(fx.panels, tt);
   if (fx.puddle > 0 && Math.random() < .03 * fx.puddle && R.unit[0]) { const u = pick(R.unit); drips.push({ x: (u.left + rand(.2, .8) * u.width) * DPR, y: u.bottom * DPR, vy: 0, r: rand(2, 4) * DPR, max: (u.bottom + rand(30, 120)) * DPR }); }
   for (let i = 0; i < 4; i++) if (fx.cdMud[i] > .4 && Math.random() < .04 && R.unit[i]) { const u = R.unit[i]; drips.push({ x: (u.left + rand(.2, .8) * u.width) * DPR, y: (u.bottom - u.height * .1) * DPR, vy: 0, r: rand(2, 4) * DPR, max: (u.bottom + rand(30, 110)) * DPR }); }
@@ -1836,7 +2323,7 @@ function frame(now) {
   /* --- canvases --- */
   drawLights(tt, fx);
   drawRays(tt, Lf * (1 + lightning * .5), G, pulse, fx);
-  drawFront(mode === 'intro' ? eOut(prog(t, T.rise, 1)) * (1 - eInOut(prog(t, T.side, 1.6))) : fx.puddle * .7, Lf, G);
+  drawFront(mode === 'intro' ? eOut(prog(t, T.rise, 1)) * (1 - eInOut(prog(t, T.side, 1.6))) : fx.puddle * .7, Lf, G, fx);
   drawTop(tt, Lf, G, (mode === 'intro' ? eOut(prog(t, .5, 3)) * worldK : 1) * (1 - G) * (1 - fx.gothamDark * .7), glowRGB, fx);
   drawOver(fx, tt);
   drawGlass(fx);
